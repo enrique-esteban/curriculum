@@ -1,0 +1,8 @@
+<div style="font-size:20px;background:#1D5075;color:#FFFFFF;font-weight:bold;border-radius:5px;padding:5px 10px;">LOGO</div>
+
+<div>
+    <p>Bienvenido {{ user.username }}, te has registrado recientemente en <a href="#">URL</a>. Por favor complete el proceso de registro haciendo click en el siguiente enlace:</p>
+    <a href="{{ url('user_activate', { 'salt' : user.salt }) }}">{{ url('user_activate', { 'salt' : user.salt }) }}</a>
+    <p>Si no ha solicitado el ingreso en <a href="#">URL</a> o a cambiado de opinión ignore este mensage, la cuenta permanecerá inactiva y será borrada pasado un tiempo.</p>
+    <p>Gracias.</p>
+</div>

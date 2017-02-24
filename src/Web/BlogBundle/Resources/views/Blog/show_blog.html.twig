@@ -1,0 +1,103 @@
+{% extends 'BlogBundle:Blog:blog_frontend.html.twig' %}
+
+{# Title
+===================================================================================================== #}
+{% block title %} {{ blog.title }} {% endblock %}
+{# ====== Fin Title #}
+
+
+{# Section
+===================================================================================================== #}
+{% block section %}
+    <!-- Cabecera: contiene el título, subtitulo y la fecha del post
+    ================================================================================================= -->
+    <header>
+        <!-- Fecha de creación
+        ····························································································· -->
+        <div><time class = "date" datetime="{{ blog.created | date('c') }}">{{ blog.created | date('l, F j, Y') }}</time></div>
+        <!-- ······ Fin Fecha de creación -->
+        
+        <!-- Título
+        ····························································································· -->
+        <h1 id="headline">{{ blog.title }}</h1>
+        <!-- ······ Fin Título -->
+    </header>
+    <!-- ====== Fin Cabecera -->
+
+
+    <!-- Articulo: el texto del articulo y las imagenes del mismo
+    ================================================================================================= -->
+    <article>
+        <img src="{{ asset(['images/blog/', blog.image] | join) }}" alt="{{ blog.title }}" />
+        <div>
+            <p>{{ blog.content }}</p>
+        </div>
+    </article>
+    <!-- ====== Fin Articulo -->
+        
+
+    <!-- Pie: el pie del artículo contiene la firma, los tags y los comentarios 
+    ================================================================================================= -->
+    <footer>
+        <div>
+        <!-- Firma: autor del post, con la fecha de la úlima modificación
+        ····························································································· -->
+            <p>Creado por <a href="{{ path('user_show_username', { 'userName': blog.author.userName }) }}">{{ blog.author }}</a>, {{ blog.created | date('\\e\\l d/m/Y \\a \\l\\a\\s H:i.') }}</p> <!-- Fin de la firma -->
+        <!-- ······ Fin Firma -->
+
+        <!-- Etiquetas
+        ····························································································· -->
+            <p>Tags: <span>
+                {% for tag in blog.tags %}
+                    {% if not loop.last %}
+                        <a href="{{ path('blog_list_tag_slug', { 'slug': tag.slug }) }}">{{ tag }}</a>, 
+                    {% else %}
+                        <a href="{{ path('blog_list_tag_slug', { 'slug': tag.slug }) }}">{{ tag }}</a>.
+                    {% endif %}
+                {% endfor %}
+            </span></p>
+        </div>
+        <!-- ······ Fin Etiquetas -->
+
+        <!-- Comentarios
+        ····························································································· -->
+        <section id="comments">
+            <h3>
+                Comentarios:
+            </h3>
+            {% if is_granted('ROLE_USER') %}
+                <p>
+                    Comentario nuevo:
+                </p>
+                {{ render(controller('BlogBundle:Comment:create', { 'blog_id': blog.id })) }}
+            {% else %}
+                <p>
+                    Para poder publicar comentarios por favor <a href="{{ path('user_login') }}">inicie sesión</a> o <a href="{{ path('blog_signup') }}">registrese</a>.
+                </p>
+            {% endif %}
+
+            <ul class="comment-list">
+                {% for comment in comments %}
+                    <li>
+                        <h4>{{ comment.author }}
+                            {% if is_granted('ROLE_EDIT_COMMENT') %}
+                                <span><a href="#">editar</a></span>
+                            {% endif %}
+                        </h4>
+                        <p>{{ comment.body }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+        <!-- ······ Fin Comentarios -->
+    </footer> 
+    <!-- ====== Fin Pie del artículo -->
+{% endblock %}
+{# ====== Fin Section #}
+
+{# Aside
+===================================================================================================== #}
+{% block aside %}
+    {{ parent() }}
+{% endblock %}
+{# ====== Fin Aside #}

@@ -1,0 +1,7 @@
+{% for relevanceOfTag in relevanceOfTags %}
+    <span class="size-{{ relevanceOfTag.amount }}">
+        <a href="{{ path('blog_list_tag_slug', { 'slug': relevanceOfTag.slug }) }}">{{ relevanceOfTag.name }}</a>,
+    </span>
+{% else %}
+    Upps, parece que no hay ningún tags asignado a los blogs.
+{% endfor %}

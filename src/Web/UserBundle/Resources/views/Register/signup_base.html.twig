@@ -1,0 +1,55 @@
+<form id="signup" class="form" action="{{ path('user_signup') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_errors(form) }}
+        <div class="text_row large">
+            {{ form_label(form.username) }}
+            {{ form_errors(form.username) }}
+            {{ form_widget(form.username) }}
+        </div>
+        <div class="text_row large">
+            {{ form_label(form.email) }}
+            {{ form_errors(form.email) }}
+            {{ form_widget(form.email) }}
+        </div>
+        <div class="pass_row large">
+            {{ form_errors(form.password) }}
+            {{ form_widget(form.password) }}
+        </div>
+        <div class="img_row large">
+            {{ form_label(form.image) }}
+            {{ form_errors(form.image) }}
+            {{ form_widget(form.image) }}
+        </div>
+
+        <div class="text_row large">
+            {{ form_label(form.first_name) }}
+            {{ form_errors(form.first_name) }}
+            {{ form_widget(form.first_name) }}
+        </div>
+        <div class="text_row large">
+            {{ form_label(form.last_name) }}
+            {{ form_errors(form.last_name) }}
+            {{ form_widget(form.last_name) }}
+        </div>
+        <div class="birth_row small">
+            {{ form_label(form.birthday) }}
+            {{ form_errors(form.birthday) }}
+            {{ form_widget(form.birthday) }}
+        </div>
+        <div class="text_row large">
+            {{ form_label(form.nationality) }}
+            {{ form_errors(form.nationality) }}
+            {{ form_widget(form.nationality) }}
+        </div>
+    
+        <div class="check_row">
+            <span><strong>¿Permitir Span?</strong></span>
+            <div class="check_switch">
+                {{ form_widget(form.allow_spam) }}
+                {{ form_label(form.allow_spam) }}
+                {{ form_errors(form.allow_spam) }}
+            </div>
+        </div>
+
+    {{ form_rest(form) }}
+</form>
+

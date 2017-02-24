@@ -1,0 +1,11 @@
+<form action="{{ path('comment_create', { 'blog_id' : blog_id } ) }}" method="post" {{ form_enctype(form) }} class="form">
+    <div>
+        {{ form_label(form.body) }}
+        {{ form_errors(form.body) }}
+        {{ form_widget(form.body) }}
+    </div>
+    
+    {{ form_row(form.Guardar) }}
+
+    {{ form_rest(form) }}
+</form>

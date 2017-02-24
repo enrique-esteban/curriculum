@@ -1,0 +1,71 @@
+{% extends 'BlogBundle:Blog:blog_frontend.html.twig' %}
+
+{# Title
+===================================================================================================== #}
+{% block title %}
+    {{ title }}
+{% endblock %}
+{# ====== Fin Title #}
+
+
+{# Section
+===================================================================================================== #}
+{% block section %}
+    <!-- Cabecera: contiene el título del post
+    ================================================================================================= -->
+    <header>
+        <!-- Titulo
+        ····························································································· -->
+        <h1 id="headline">{{ title }}</h1>
+        <!-- ······ Fin Titulo -->
+    </header>
+    <!-- ====== Fin Cabecera -->
+
+     <!-- Articulo: Lista de blosg, con fecha, imagen, resumen, etc.
+    ================================================================================================= -->
+    <article id="recent-blogs">
+        {% for blog in blogs %}
+            <!-- Fecha del blog
+            ························································································· -->
+            <div class="date">
+                <time datetime="{{ blog.created | date('c') }}">{{ blog.created | formatted_date }}</time>
+            </div>
+            <!-- ······ Fin Fecha -->
+
+            <!-- Subtitulo
+            ························································································· -->
+            <h2 id="subhead"><a href="{{ path('blog_show_slug', { 'slug': blog.slug }) }}">{{ blog.title }}</a></h2>
+            <!-- ······ Fin Subtitulo -->
+
+            <!-- Imagen del blog
+            ························································································· -->
+            <img src="{{ asset(['images/blog/', blog.image] | join) }}" />
+            <!-- ······ Fin Imagen del blog -->
+
+            <!-- Resumen del blog (con el autor y nº de comentarios)
+            ························································································· -->
+            <div>
+                <p>{{ blog.content(200) }}</p>
+                <p><a href="{{ path('blog_show_slug', { 'slug': blog.slug }) }}">Continua leyendo...</a></p>
+            </div>
+            <div>
+                <p>Author: <a href="{{ path('user_show_username', { 'userName': blog.author.userName }) }}">{{ blog.author }}</a></p>
+                <p>Comentarios: <span>{{ blog.comments | length }}</span></p>
+            </div>
+            <!-- ······ Fin Resumen del blog -->
+            <hr>
+        {% else %}
+            <p>No hay entradas recientes</p>
+    </article>
+    <!-- ====== Fin Articulo -->
+{% endfor %}
+{% endblock %}
+{# ====== Fin Section #}
+
+
+{# Aside
+===================================================================================================== #}
+{% block aside %}
+    {{ parent() }}
+{% endblock %}
+{# ====== Fin Aside #}

@@ -1,0 +1,8 @@
+parameters:
+    # Dirección de correo electronico de contacto
+    emails.contact_email: ense.esteban@gmail.com
+
+services:
+#    user.example:
+#        class: %user.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

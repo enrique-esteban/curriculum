@@ -1,0 +1,509 @@
+{% extends 'MainBundle:Layout:frontend.html.twig' %}
+
+{% block title %}CV - Enrique José Esteban Plaza{% endblock %}
+
+{# comienzo bloque leftContent #}
+{% block leftContent %}
+    <!--Header ················································································ -->
+    <header id="header">
+        <!--Main header-->
+        <div class="main-header">
+            <!--Profile image-->
+            <figure class="img-profile">
+                <img src="{{ asset(user.image) }}" alt="{{ user.firstName ~ " " ~ user.lastname }}"/>
+                
+                <figcaption class="name-profile">
+                    <span>{{ user.firstName ~ " " ~ user.lastname }} <sup>&reg;</sup></span>
+                </figcaption>
+            </figure>
+            <!--Fin profile image-->
+
+            <!--Main navigation-->
+                <nav id="main-nav" class="main-nav clearfix tabbed">
+                    <ul>
+                        <li ><a href="#about"><i class="icon-user"></i>Acerca de mi</a></li>
+                        <li><a  href="#skills"><i class="icon-tools"></i>Habilidades</a></li>
+                        <li><a  href="#experiences"><i class="icon-chat"></i>Experiencia</a></li>
+                        <li><a  href="#education"><i class="icon-graduation-cap"></i>Educación</a></li>
+                        <li><a  href="#courses"><i class="icon-bookmark"></i>Cursos</a></li>
+                        <li><a  href="#services"><i class="icon-lifebuoy"></i>Servicios</a></li>
+                        <li><a  href="#contact"><i class="icon-phone"></i>Contacto</a></li>
+                    </ul>
+                </nav>
+            <!--Fin main navigation -->
+        </div>
+        <!--Fin main header -->
+         
+        <!--Botones sociales y créditos-->
+        <div class="bottom-header bgWhite ofsTSmall ofsBSmall tCenter">
+            <ul class="social">
+                {% for sn in user.socialNetworks %}
+                    <li><a href="{{ sn.url }}"><i class="{{ sn.snId.icon }}"></i></a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <!--Fin botones sociales y crédito-->
+    </header>
+    <!-- ······ Fin header -->
+{% endblock %} {# fin bloque leftContent #}
+{% block rightContent %} {# comienzo bloque rightContent #}
+    <!--About Tab ············································································· -->
+    <section id="about" class="bgWhite ofsInBottom">
+        <!--About-->
+        <div class="about">
+            <!-- Bloque ¿Quien soy yo? ························································ -->
+            <!--Main title-->
+            <div class="main-title">
+                <h1><a name="about">Acerca de mi</a></h1>
+                <div class="divider">
+                    <div class="zigzag large clearfix " data-svg-drawing="yes" >
+                        <svg xml:space="preserve" viewBox="0 0 69.172 14.975" width="37" height="28" y="0px" x="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1">
+                            <path d="M1.357,12.26 10.807,2.81 20.328,12.332 29.781,2.879 39.223,12.321 48.754,2.79 58.286,12.321 67.815,2.793" style="stroke-dasharray: 93.9851, 93.9851; stroke-dashoffset: 0;" />
+                        </svg>
+                    </div>
+                </div>
+            </div>  
+            <!--Fin main title-->
+            
+            <!--Content-->  
+            <div class="content">
+                <!--Block content-->    
+                <div class="block-content margBSmall">
+                    <div class=" profile margBSmall">
+                        <h1>{{ user.firstName ~ " " ~ user.lastname }}</h1>
+                        <h3>{{ curriculum.career }}</h3>
+                    </div>
+                    {#
+                    <!--Row (Resumen) -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p>Sed ut perspiciatis unde omnis iste natus error
+                             sit voluptatem accusantium doloremque laudantium, totam rem aperiam,
+                             eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae
+                             vitae dicta sunt explicabo. Nemo enim ipsam voluptatem. </p>
+                        </div>
+                        <div class="col-md-6">
+                            <p>Sed ut perspiciatis unde omnis iste natus error
+                             sit voluptatem accusantium doloremque laudantium, totam rem aperiam,
+                             eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae
+                             vitae dicta sunt explicabo. Nemo enim ipsam voluptatem. </p>
+                        </div>
+                    </div>
+                    <!--Fin  row (Resumen)-->  
+                    #}
+                </div>
+                <!--Fin  block content -->    
+                    
+                <!--Block content-->    
+                <div class="block-content">
+                    <div class="info">
+                        <!--Row (tabla de datos personales)-->  
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul class="info-list clearfix">
+                                    <li><span class="inf">Nombre </span>  <span class="value">{{ user.firstName ~ " " ~ user.lastname }}</span></li>
+                                    <li><span class="inf">F. de nacimiento</span>  <span class="value">{{ user.birthday | localizeddate('long', 'none') }}</span></li>
+                                    <li><span class="inf">Dirección</span>  <span class="value">{{ user.address }}</span></li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul class="info-list">
+                                    <li><span class="inf">Email</span>  <span class="value">{{ user.email }}</span></li>
+                                    <li><span class="inf">Teléfono</span>  <span class="value">{{ user.phone |phone }} </span></li>
+                                    <li><span class="inf">Skype</span>  <span class="value">{{ curriculum.skypeUsername }}</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!--Fin  row (tabla de datos personales)-->
+                    </div>
+                </div>
+                <!--Fin  block content -->
+            </div>
+            <!--Fin  Content-->
+            <!-- ······ Fin bloque ¿Quien soy yo? -->
+
+
+            <!-- Bloque Habilidades Profesionales ············································· -->
+            <!--Main title-->
+            <div class="main-title">
+                <h1><a name="skills">Habilidades Profesionales</a></h1>
+                <div class="divider">
+                    <div class="zigzag large clearfix "  data-svg-drawing="yes" >
+                        <svg xml:space="preserve" viewBox="0 0 69.172 14.975" width="37" height="28" y="0px" x="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1">
+                            <path d="M1.357,12.26 10.807,2.81 20.328,12.332 29.781,2.879 39.223,12.321 48.754,2.79 58.286,12.321 67.815,2.793 "  style="stroke-dasharray: 93.9851, 93.9851; stroke-dashoffset: 0;"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>  
+            <!--Fin  main title-->
+               
+            <!--Content-->  
+            <div class="content">
+                {% for psg in professionalSkillGroups %}
+                <!--bloque content (grupo {{ psg.name }})-->
+                    <div class="block-content margBMedium">
+                        <!--Skill design-->
+                        <div class="skill {{ psg.cssClass }}">
+                            <!--Row-->  
+                            <div class="row ">
+                                <div class="vc">
+                                    <div class="col-md-11">
+                                        <ul class="skills-list clearfix">
+                                            {% for ps in psg.professionalSkills %}
+                                                <li>
+                                                    <h4>{{ ps.name }}</h4>
+                                                    <div class="progress">
+                                                        <div class="percentage">
+                                                            {{ ps.percentage ~ '%' }}
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="title {{ psg.cssClass }}">
+                                            <span>{{ psg.name }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Fin  row-->
+                        </div>
+                        <!--Fin  skill design-->
+                    </div>
+                <!--Fin del bloque content (grupo {{ psg.name }})-->
+                {% endfor %}
+            </div>
+            <!-- ······ Fin Bloque Habilidades Profesionales -->
+
+
+            <!-- Bloque  Experiencia Laboral ·················································· -->
+            <!--Main title-->
+            <div class="main-title">
+                <h1><a name="experiences">Experiencia Profesional</a></h1>
+                <div class="divider">
+                    <div class="zigzag large clearfix "  data-svg-drawing="yes" >
+                       <svg xml:space="preserve" viewBox="0 0 69.172 14.975" width="37" height="28" y="0px" x="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1">
+                            <path d="M1.357,12.26 10.807,2.81 20.328,12.332 29.781,2.879 39.223,12.321 48.754,2.79 58.286,12.321 67.815,2.793 "  style="stroke-dasharray: 93.9851, 93.9851; stroke-dashoffset: 0;"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>  
+            <!--Fin  main title-->
+
+            <!--Content-->  
+            <div class="content">
+                <!--Block content-->    
+                <div class="block-content ">
+                    <!--Timeline-->
+                    <div class="timeline experience">
+                        <!--Row-->  
+                        <div class="row ">
+                            <div class="col-md-12">
+                                <!--Experience holder-->    
+                                <div class="exp-holder margTop">
+                                    {% for we in workExperiences %}
+                                        <!--Experience-->
+                                        <div class="exp">
+                                            <div class="hgroup" >
+                                                <h4>{{ we.jobTitle }} – {{ we.company }} </h4>
+                                                <h6>
+                                                    {% if we.isCurrent == false %}
+                                                        <i class="icon-calendar"></i>{{ we.numberOfYears }} años.
+                                                    {% else %}
+                                                        <i class="icon-calendar"></i>{{ we.startDate | localizeddate('long', 'none') }} -
+                                                        <span class="current">Current</span>
+                                                    {% endif %}
+                                                </h6>
+                                            </div>
+                                            <p>{{ we.description }}</p>
+                                        </div>
+                                        <!--Fin  experience-->
+                                    {% endfor %}
+                                </div>
+                                <!--Fin  experience holder-->
+                            </div>
+                        </div>
+                        <!--Fin  row-->
+                    </div>
+                    <!--Fin  timeline-->
+                </div>
+                <!--Fin  block content-->
+            </div>
+            <!--Fin  content-->
+            <!-- ······ Fin Bloque Experiencia Laboral -->
+                        
+
+            <!-- Bloque  Educación ···························································· -->         
+            <!--Main title-->
+            <div class="main-title">
+                <h1><a name="education">Educación</a></h1>
+                <div class="divider">
+                    <div class="zigzag large clearfix "  data-svg-drawing="yes" >
+                        <svg xml:space="preserve" viewBox="0 0 69.172 14.975" width="37" height="28" y="0px" x="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1">
+                            <path d="M1.357,12.26 10.807,2.81 20.328,12.332 29.781,2.879 39.223,12.321 48.754,2.79 58.286,12.321 67.815,2.793 "  style="stroke-dasharray: 93.9851, 93.9851; stroke-dashoffset: 0;"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>  
+            <!--Fin  main title-->
+
+            <!--Content-->  
+            <div class="content">
+                <!--Block content-->    
+                <div class="block-content">
+                    <!--Timeline-->
+                    <div class="timeline education">
+                        <!--Row-->  
+                        <div class="row ">
+                            <div class="col-md-12">
+                                <!--Experience holder-->    
+                                <div class="exp-holder margTop">
+                                    <!--Experience-->
+                                    {% for ep in educationPlaces %}
+                                        <div class="exp">
+                                            <div class="hgroup" >
+                                                <h4>{{ ep.titration }} – {{ ep.place }} </h4>
+                                                <h6>
+                                                    <i class="icon-calendar"></i>
+                                                    {{ ep.startDate | localizeddate('medium', 'none', null, null, "MMMM y") }} - 
+                                                    {{ ep.finishDate | localizeddate('medium', 'none', null, null, "MMMM y") }}
+                                                </h6>
+                                            </div>
+                                            {% if ep.description %}
+                                                <p>ep.description</p>
+                                        {% endif %}
+                                        </div>
+                                    {% endfor %}
+                                    <!--Fin  experience-->
+                                </div>
+                                <!--Fin  experience holder-->
+                            </div>
+                        </div>
+                        <!--Fin  row-->
+                    </div>
+                    <!--Fin  timeline-->
+                </div>
+                <!--Fin  block content-->
+            </div>
+            <!--Fin  content-->
+            <!-- ······ Fin Bloque Educación -->
+
+
+            <!-- Bloque  Cursos ······························································· -->
+            <!--Main title-->
+            <div class="main-title">
+                <h1><a name="courses">Cursos</a></h1>
+                <div class="divider">
+                    <div class="zigzag large clearfix "  data-svg-drawing="yes" >
+                        <svg xml:space="preserve" viewBox="0 0 69.172 14.975" width="37" height="28" y="0px" x="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1">
+                            <path d="M1.357,12.26 10.807,2.81 20.328,12.332 29.781,2.879 39.223,12.321 48.754,2.79 58.286,12.321 67.815,2.793 "  style="stroke-dasharray: 93.9851, 93.9851; stroke-dashoffset: 0;"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>  
+            <!--Fin  main title-->
+
+            <!--Content-->  
+            <div class="content">
+                <!--Block content-->    
+                <div class="block-content">
+                    <!--Timeline-->
+                    <div class="timeline education">
+                        <!--Row-->  
+                        <div class="row ">
+                            <div class="col-md-12">
+                                <!--Experience holder-->    
+                                <div class="exp-holder margTop">
+                                    <!--Experience-->
+                                    {% for c in courses %}
+                                        <div class="exp">
+                                            <div class="hgroup" >
+                                                <h4>{{ c.titration }} – {{ c.place }} </h4>
+                                                <h6>
+                                                    <i class="icon-calendar"></i>
+                                                    {{ c.startDate | localizeddate('medium', 'none', null, null, "y") }} - 
+                                                    {{ c.hours }} horas
+                                                </h6>
+                                            </div>
+                                            {% if c.description %}
+                                                <p>c.description</p>
+                                        {% endif %}
+                                        </div>
+                                    {% endfor %}
+                                    <!--Fin  experience-->
+                                </div>
+                                <!--Fin  experience holder-->
+                            </div>
+                        </div>
+                        <!--Fin  row-->
+                    </div>
+                    <!--Fin  timeline-->
+                </div>
+                <!--Fin  block content-->
+            </div>
+            <!--Fin  content-->
+            <!-- ······ Fin Bloque Cursos -->
+            
+
+            <!-- Bloque  Servicios ···························································· -->
+            <!--Main title-->
+            <div class="main-title">
+                <h1><a name="services">Servicios</a></h1>
+                <div class="divider">
+                    <div class="zigzag large clearfix "  data-svg-drawing="yes" >
+                        <svg xml:space="preserve" viewBox="0 0 69.172 14.975" width="37" height="28" y="0px" x="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1">
+                            <path d="M1.357,12.26 10.807,2.81 20.328,12.332 29.781,2.879 39.223,12.321 48.754,2.79 58.286,12.321 67.815,2.793 " style="stroke-dasharray: 93.9851, 93.9851; stroke-dashoffset: 0;"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>  
+            <!--Fin  main title-->
+
+            <!--Content-->  
+            <div class="content">
+                <!--Block content-->    
+                <div class="block-content ">
+                    <!--Services-->
+                    <div class="services">
+                        <!--Row-->  
+                        <div class="row ">
+                            <!--Block-->
+                            <div class="block service tCenter">
+                                {% for s in services %}
+                                    <div class="col-md-4">
+                                        <div class="ico">
+                                            <i class="icon-{{ s.icon }}"></i>
+                                        </div>
+                                        <div class="det">
+                                            <h3>{{ s.name }}</h3>
+                                                <p>{{ s.description }}</p>
+                                        </div>
+                                    </div>
+
+                                    {% if loop.index % 3 == 0 %}
+                                            </div>
+                                            <!--Fin  block-->
+                                        </div>
+                                        <!--Fin  row-->
+
+                                        <!--Row-->
+                                        <div class="row">
+                                            <!--Divider-->
+                                            <div class="divider-m tCenter margTSmall margBSmall clearfix">
+                                                <div class="col-md-12">
+                                                    <div class="zigzag medium clearfix "  data-svg-drawing="yes" >
+                                                        <svg xml:space="preserve" viewBox="0 0 69.172 14.975" width="45" height="5" y="0px" x="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1">
+                                                            <path d="M1.357,12.26 10.807,2.81 20.328,12.332 29.781,2.879 39.223,12.321 48.754,2.79 58.286,12.321 67.815,2.793 "  style="stroke-dasharray: 93.9851, 93.9851; stroke-dashoffset: 0;"/>
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--Fin  divider-->
+                                        </div>
+                                        <!--Fin  row-->
+
+                                        <!--Row-->  
+                                        <div class="row ">
+                                            <!--Block-->
+                                            <div class="block service tCenter">                                        
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <!--Fin  block-->
+                        </div>
+                        <!--Fin  row-->
+                    </div>
+                    <!--Fin  servcices-->
+                </div>
+                <!--Fin  block content-->
+            </div>
+            <!--Fin  content-->
+            <!-- ······ Fin Bloque Servicios -->            
+             
+            {#          
+            <!-- Bloque  Testimonios ·························································· -->
+            <!--Main title-->
+            <div class="main-title">
+                <h1>testimonials</h1>
+                <div class="divider">
+                    <div class="zigzag large clearfix "  data-svg-drawing="yes" >
+                        <svg xml:space="preserve" viewBox="0 0 69.172 14.975" width="37" height="28" y="0px" x="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1">
+                            <path d="M1.357,12.26 10.807,2.81 20.328,12.332 29.781,2.879 39.223,12.321 48.754,2.79 58.286,12.321 67.815,2.793 "  style="stroke-dasharray: 93.9851, 93.9851; stroke-dashoffset: 0;" />
+                        </svg>
+                    </div>
+                </div>
+            </div>  
+            <!--Fin  main title-->
+                        
+            <!--Content-->  
+            <div class="content">
+                <!--Block content-->    
+                <div class="block-content ">
+                    <!--Testimonilas-->
+                    <div class="testimonials">
+                        <!--Row-->  
+                        <div class="row ">
+                            <div class="col-md-12">
+                                <!--Slider-->
+                                <div class="testi clearfix ">
+                                    <ul id="testimonial-carousel">
+                                        <li>
+                                            <div class="block-quote">
+                                                <div class="block-img"><img alt="" src="img/testimonial/1.jpg"></div>
+                                                <div class="block-icon"><i class="icon-quote"></i></div>
+                                                <h3 class="block-profile">Carlose Smith   <span> CEO / Split Inc</span></h3>
+                                                <blockquote>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta.</blockquote>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="block-quote">
+                                                <div class="block-img"><img alt="" src="img/testimonial/2.jpg"></div>
+                                                <div class="block-icon"><i class="icon-quote"></i></div>
+                                                <h3 class="block-profile">Carlose Smith<span> CEO / Split Inc</span></h3>
+                                                <blockquote>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta.</blockquote>
+                                            </div>
+                                        </li>   
+                                    </ul>   
+                                </div>
+                                <!--Fin   slider-->
+                            </div>
+                        </div>
+                        <!--Fin  row-->
+                    </div>
+                    <!--Fin  testimonials-->
+                </div>
+                <!--Fin  block content-->
+            </div>
+            <!--Fin  content-->
+            <!-- ······ Fin Bloque Testimonios -->
+            #}
+
+            <!-- Bloque  Botones Pie ·························································· -->
+            <!--Button-->
+            <div class="button margTop ofsInTop tCenter">
+                <div class="divider">
+                    <div class="zigzag large clearfix "  data-svg-drawing="yes" >
+                        <svg xml:space="preserve" viewBox="0 0 69.172 14.975" width="37" height="28" y="0px" x="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1">
+                            <path d="M1.357,12.26 10.807,2.81 20.328,12.332 29.781,2.879 39.223,12.321 48.754,2.79 58.286,12.321 67.815,2.793 "  style="stroke-dasharray: 93.9851, 93.9851; stroke-dashoffset: 0;"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!--Row-->  
+                <div class="row ">
+                    <div class="col-md-12">
+                        <a class="but opc-1 ico" href="#">Download my cv</a>
+                        <a class="but opc-2 ico" href="#">Print my resume</a>
+                    </div>
+                </div>
+                <!--Fin  row-->
+            </div>
+            <!--Fin  button-->
+            <!-- ······ Fin Bloque Botones Pie -->
+        </div>
+        <!--Fin  about-->
+    </section>
+    <!-- ······ Fin about tab-->
+{% endblock %} {# fin bloque rightContent #}

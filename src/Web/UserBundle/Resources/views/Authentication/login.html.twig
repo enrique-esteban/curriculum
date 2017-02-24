@@ -1,0 +1,76 @@
+{% extends 'BlogBundle:Blog:blog_frontend.html.twig' %}
+
+{# Title
+===================================================================================================== #}
+{% block title %}
+    Formulario de login
+{% endblock %}
+{# ====== Fin Title #}
+
+
+{# Section
+===================================================================================================== #}
+{% block section %}
+    <!-- Cabecera
+    ================================================================================================= -->
+    <header>
+        <!-- Título
+        ····························································································· -->
+        <h1 id="headline">Formulario de Login</h1>
+        <!-- ······ Fin Título -->
+
+        <!-- Mensage Flash
+        ····························································································· -->
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div class="flashMessage">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+        <!-- ······ Fin Mensage Flash -->
+
+        <!-- Mensage de Error
+        ····························································································· -->
+        {% if error %}
+            <div class "errorMessage">
+                {{ error.message }}
+            </div>
+        {% endif %}
+        <!-- ······ Fin Mensage de Error -->
+    </header>
+    <!-- ====== Fin Cabecera -->
+
+    <!-- Articulo: formulario de logueo
+    ================================================================================================= -->
+    <article>
+        <form id="login-form" class="form" action="{{ path('user_login_check') }}" method="post">
+            <div class="text_row large">
+                <label for="_username">Nombre de usuario</label>
+                <input type="text" name="_username" value="{{ last_username }}" placeholder="Usuario" />
+            </div>
+            <div class="text_row large">
+                <label for="_password">Password</label>
+                <input type="password" name="_password" placeholder="Contraseña" />
+            </div>
+            <div class="check_row">
+                <span><strong>¿Recordar la sesión?</strong></span>
+                <div class="check_switch">
+                    <input id="_remember_me" type="checkbox" name="_remember_me" checked />
+                    <label for="_remember_me"></label>
+                </div>
+            </div>
+            <div>
+                <input class="button" type="submit" name="login" value="Enviar" />
+            </div>
+        </form>
+        <p>¿Olvidaste la contraseña? <a href="#" class="pass-forget">pulse aquí</a> para recuperarla, si aun no está registrado <a href="#" class="pass-forget">pulse aquí</a></p>.
+    </article>
+    <!-- ====== Fin Articulo -->
+{% endblock %}
+{# ====== Fin Section #}
+
+{# Aside
+===================================================================================================== #}
+{% block aside %}
+    {{ parent() }}
+{% endblock %}
+{# ====== Fin Aside #}

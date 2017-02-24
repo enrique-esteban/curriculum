@@ -1,0 +1,16 @@
+{% if is_granted('ROLE_USER') %}
+    <p>
+        Bienvenido <a href="{{ path('user_show_username', { 'userName':app.user.username })}}">{{ app.user }}</a>, si quieres cerrar la sesión <a href="{{ path('user_logout') }}">pulse aquí.</a>
+    </p>
+{% else %}
+    <form action="{{ path('user_login_check') }}" method="post">
+    	<input type="text" class="head-textbox" name="_username" placeholder="Usuario o eMail" />
+    	<input type="password" class="head-textbox" name="_password" placeholder="Contraseña" />
+    	<input type="submit" name="login" value="" />
+        <div class="checkbox">
+            <span>¿Recordar?</span>
+            <input type="checkbox" name="_remember_me" id="remember" />
+            <label for="remember"><!-- Espacio que representa el circulo del checkbox --></label>
+        </div>
+    </form>
+{% endif %}

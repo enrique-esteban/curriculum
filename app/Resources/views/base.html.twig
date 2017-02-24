@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>   <html lang="es-ES" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>      <html lang="es-ES" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>      <html lang="es-ES" class="no-js lt-ie9"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="es-ES" class="no-js"> <!--<![endif]-->
+<head>
+    <!-- Etiquetas meta ======================================================================= -->
+    <meta charset="UTF-8" />
+        
+    <meta name="description" content="">
+    <meta name="author" content="Enrique José Estenba Plaza">
+    <!-- ====== Fin etiquetas meta -->
+    
+    <!-- Meta para dispositivos moviles ======================================================= -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- ====== Fin meta para dispositivos móviles -->
+
+    <!-- Título =============================================================================== -->
+    <title>{% block title %}¡Bienvenido!{% endblock %}</title>
+    <!-- ====== Fin Título -->
+
+    <!-- Hojas de estilo ====================================================================== -->
+    {% block stylesheets %} {% endblock %}
+    <!-- ====== Fin hojas de estilo -->
+    
+    <!-- Scripts JavaScripts (head) =========================================================== -->
+    {% block jshead %} {% endblock %}
+    <!-- ====== Fin JavaScripts (head) -->
+    
+    <!-- Favicon ============================================================================== -->
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    <!-- ====== Fin favicon -->
+</head>
+<body>
+    {% block body %}{% endblock %}
+</body>
+</html>

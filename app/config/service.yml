@@ -1,0 +1,15 @@
+services:
+    web.mainbungle.twig.extension.utilities:
+        class: Web\MainBundle\Twig\Extension\UtilitiesExtension
+        tags:
+            - { name: twig.extension }
+
+    web.userbundle.security.blogvoter:
+        class: Web\BlogBundle\Security\CommentVoter
+        tags:
+            - { name: security.voter }
+
+    twig.extension.intl:
+        class: Twig_Extensions_Extension_Intl
+        tags:
+            - { name: twig.extension }

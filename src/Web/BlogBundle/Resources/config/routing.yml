@@ -1,0 +1,30 @@
+blog_recent:
+    pattern: /recent/
+    defaults: { _controller: BlogBundle:Blog:recentBlogs }
+
+blog_signup:
+    pattern: /signup/
+    defaults: { _controller: BlogBundle:Blog:blogSignup }
+
+blog_show_id:
+    pattern:  /show/{id}/
+    defaults: { _controller: BlogBundle:Blog:showForId }
+    requirements:
+        _method:  GET
+        id: \d+
+
+blog_show_slug:
+    pattern:  /show/{slug}/
+    defaults: { _controller: BlogBundle:Blog:showForSlug }
+    requirements:
+        _method:  GET
+
+blog_list_tag_slug:
+    pattern: /list/for-tag/{slug}/
+    defaults: { _controller: BlogBundle:Blog:listForTag }
+
+comment_create:
+    pattern: /comment/{blog_id}/
+    defaults: { _controller: BlogBundle:Comment:create }
+    requirements:
+        id: \d+

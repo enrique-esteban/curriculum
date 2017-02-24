@@ -1,0 +1,28 @@
+# src/Web/UserBundle/Resources/config/routing.ylm
+user_login:
+    pattern: /login/
+    defaults: { _controller: UserBundle:Authentication:login }
+
+user_login_check:
+    pattern: /login_check/
+
+user_logout:
+    pattern: /logout/
+
+user_signup:
+    pattern: /signup/
+    defaults: { _controller: UserBundle:Register:getSignup }
+
+user_show_id:
+    pattern: /show/{id}/
+    defaults: { _controller: UserBundle:User:showForId }
+    requirements:
+        id: \d+
+
+user_show_username:
+    pattern: /show/{userName}/
+    defaults: { _controller: UserBundle:User:showForUsername }
+
+user_activate:
+    pattern: /activate/{salt}/
+    defaults: { _controller: UserBundle:Register:activate }

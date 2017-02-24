@@ -1,0 +1,23 @@
+{% extends 'MainBundle:Layout:layout.html.twig' %}
+
+{% block title %}Perfil de {{ user.username }}{% endblock %}
+
+{% block section %}
+	<p><b>Nick: </b>{{ user.username }}</p>
+	<p><b>Nombre: </b>{{ user.firstName }}</p>
+	<p><b>Apellidos: </b>{{ user.lastName }}</p>
+	<p><b>eMail: </b>{{ user.email }}</p>
+	<p><b>Nacionalidad: </b>{{ user.nationality }}</p>
+	<p><b>Fecha de nacimiento: </b>{{ user.birthday | date('d \\d\\e\\l m \\d\\e\\l Y') }}</p>
+	<p><b>Fecha de alta: </b>{{ user.created | date('d \\d\\e\\l m \\d\\e\\l Y') }}</p>
+	<p><b>Ruta de la imagen: </b>{{ user.image }}</p>
+	<p><b>Permite Spam: </b>{{ user.allowSpam?'yes':'no' }}</p>
+	<p><b>Activada: </b>{{ user.activated?'yes':'no' }}</p>
+	<p><b>Administrador: </b>{{ user.admin?'yes':'no' }}</p>
+{% endblock %}
+	
+{% block aside %}
+	{{ parent() }}
+{% endblock %}
+
+{% block jsbody %}{% endblock %}

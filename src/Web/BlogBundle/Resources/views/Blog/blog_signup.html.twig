@@ -1,0 +1,47 @@
+{% extends 'BlogBundle:Blog:blog_frontend.html.twig' %}
+
+{# Title
+===================================================================================================== #}
+{% block title %}
+    Formulario de alta de usuarios
+{% endblock %}
+{# ====== Fin Title #}
+
+{# Section
+===================================================================================================== #}
+{% block section %}
+	<!-- Cabecera: contiene el título, subtitulo y la fecha del post
+    ================================================================================================= -->
+    <header>    
+        <!-- Título
+        ····························································································· -->
+        <h1 id="headline">Formulario de alta de usuarios</h1>
+        <!-- ······ Fin Título -->
+    </header>
+    <!-- ====== Fin Cabecera -->
+
+    <!-- Articulo: el texto del articulo y las imagenes del mismo
+    ================================================================================================= -->
+    <article>
+        <div class="one-half column"> 
+        <!-- Formulario
+        ····························································································· --> 
+            {% render(controller('UserBundle:Register:getSignup')) %}
+        </div>
+
+        <!-- Descripción
+        ····························································································· -->
+        <div class="one-half colum">
+            <p>Aqui irá la descripión del formulario:</p>
+        </div>
+    </article>
+    <!-- ====== Fin Articulo -->
+{% endblock %}
+{# ====== Fin Title #}
+
+{# Aside
+===================================================================================================== #}
+{% block aside %}
+	{{ parent() }}
+{% endblock %}
+{# ====== Fin Aside #}

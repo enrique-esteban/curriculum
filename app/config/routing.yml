@@ -1,0 +1,12 @@
+blog:
+    resource: "@BlogBundle/Resources/config/routing.yml"
+    prefix:   /blog
+
+user_bundle:
+    resource: "@UserBundle/Resources/config/routing.yml"
+    prefix:   /user
+
+main_bundle:
+    resource: "@MainBundle/Resources/config/routing.yml"
+    prefix:   /
+

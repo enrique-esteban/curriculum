@@ -1,0 +1,27 @@
+{% extends 'MainBundle:Layout:layout.html.twig' %}
+
+{% block title %}Formulario de contacto{% endblock %}
+
+{% block section %}
+    <h1>{{ block('title') }}</h1>
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div>
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    <form action="{{ path('contact_form') }}" method="post" {{ form_enctype(form) }}>
+        {{ form_errors(form) }}
+
+        {{ form_row(form.name) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.subject) }}
+        {{ form_row(form.body) }}
+
+        {{ form_rest(form) }}
+    </form>
+{% endblock %}
+
+{% block aside %}
+    {{ parent() }}
+{% endblock %}
