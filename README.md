@@ -1,3 +1,3 @@
-miweb
+Curriculum / Web Personal
 =====
-Proyecto de Enrique Esteban Plaza
+Proyecto de mi web personal realizado en Symfony 2.8 
