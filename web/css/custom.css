@@ -8,10 +8,11 @@
 /* Table of Content
 ==================================================
 1-Return to Top Arrow
-2-Media queries
+2-Ajuste de las etiquetas de habilidades profesionales
+-Media queries
 
 
-/* Return to Top Arrow */
+/* 1 - Return to Top Arrow */
 #return-to-top {
     position: fixed;
     bottom: 20px;
@@ -57,6 +58,25 @@
 /* End Return to Top Arrow */
 
 
+/* 2 - Ajuste de las etiquetas de habilidades profesionales */
+.col-md-1.web {
+    right:-11px;
+}
+
+.col-md-1.framework {
+    right: 18px;
+}
+
+.col-md-1.dev {
+    right: -13px;
+}
+
+.col-md-1.others {
+    right: -4px;
+}
+/* End Ajuste de las etiquetas de habilidades profesionales */
+
+
 /* Media queries */
 
 /*iPad lanscape*/
@@ -94,6 +114,10 @@
 
 /* Mobile Portrait Size -> Mobile Landscape Size */
 @media only screen and (max-width:479px) {
+     #return-to-top {
+        border-radius: 100px;
+    }
+
     #return-to-top:hover {
         background: rgba(51, 55, 61, 0.5);
     }

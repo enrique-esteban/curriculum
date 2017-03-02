@@ -25,6 +25,7 @@ class LoadProfessionalSkillGroupData extends AbstractFixture implements OrderedF
         $professionalSkill = new ProfessionalSkillGroup();
 
         $professionalSkill->setName('Web');
+        $professionalSkill->setSlug('web');
         $professionalSkill->setCssClass('dev');
 
         $this->addReference('desarrollo-web', $professionalSkill);
@@ -34,10 +35,11 @@ class LoadProfessionalSkillGroupData extends AbstractFixture implements OrderedF
         // Insertamos otra habilidad profesional:
         $professionalSkill = new ProfessionalSkillGroup();
 
-        $professionalSkill->setName('CMD');
+        $professionalSkill->setName('Framework');
+        $professionalSkill->setSlug('framework');
         $professionalSkill->setCssClass('dev');
 
-        $this->addReference('cmd', $professionalSkill);
+        $this->addReference('framework', $professionalSkill);
 
         $manager->persist($professionalSkill);
 
@@ -45,6 +47,7 @@ class LoadProfessionalSkillGroupData extends AbstractFixture implements OrderedF
         $professionalSkill = new ProfessionalSkillGroup();
 
         $professionalSkill->setName('Diseño');
+        $professionalSkill->setSlug('desing');
         $professionalSkill->setCssClass('des');
 
         $this->addReference('diseño', $professionalSkill);
@@ -55,6 +58,7 @@ class LoadProfessionalSkillGroupData extends AbstractFixture implements OrderedF
         $professionalSkill = new ProfessionalSkillGroup();
 
         $professionalSkill->setName('Dev');
+        $professionalSkill->setSlug('dev');
         $professionalSkill->setCssClass('dev');
 
         $this->addReference('desarrollo', $professionalSkill);
@@ -66,6 +70,7 @@ class LoadProfessionalSkillGroupData extends AbstractFixture implements OrderedF
         $professionalSkill = new ProfessionalSkillGroup();
 
         $professionalSkill->setName('Otros');
+        $professionalSkill->setSlug('others');
         $professionalSkill->setCssClass('prs');
 
         $this->addReference('otros', $professionalSkill);

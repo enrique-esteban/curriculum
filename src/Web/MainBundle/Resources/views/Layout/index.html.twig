@@ -4,6 +4,31 @@
 
 {# comienzo bloque leftContent #}
 {% block leftContent %}
+    {# Definición de macros #}
+    {% macro footButtons () %}
+        <!--Button-->
+        <div class="button margTop ofsInTop tCenter not-printable">
+            <div class="divider">
+                <div class="zigzag large clearfix "  data-svg-drawing="yes" >
+                    <svg xml:space="preserve" viewBox="0 0 69.172 14.975" width="37" height="28" y="0px" x="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1">
+                        <path d="M1.357,12.26 10.807,2.81 20.328,12.332 29.781,2.879 39.223,12.321 48.754,2.79 58.286,12.321 67.815,2.793 "  style="stroke-dasharray: 93.9851, 93.9851; stroke-dashoffset: 0;"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!--Row-->  
+            <div class="row ">
+                <div class="col-md-12">
+                    <a class="but opc-1 ico" href="#">Descarga mi cv</a>
+                    <a class="but opc-2 ico" href="#" onclick="javascript:window.print()">Imprimemelo</a>
+                </div>
+            </div>
+            <!--Fin  row-->
+        </div>
+        <!--Fin  button-->
+    {% endmacro %}
+    {# Fin de la Definición de macros #}
+
     <!--Header ················································································ -->
     <header id="header">
         <!--Main header-->
@@ -12,18 +37,18 @@
             <figure class="img-profile">
                 <img src="{{ asset(user.image) }}" alt="{{ user.firstName ~ " " ~ user.lastname }}"/>
                 
-                <figcaption class="name-profile">
+                <figcaption class="name-profile not-printable">
                     <span>{{ user.firstName ~ " " ~ user.lastname }} <sup>&reg;</sup></span>
                 </figcaption>
             </figure>
             <!--Fin profile image-->
 
             <!--Main navigation-->
-                <nav id="main-nav" class="main-nav clearfix tabbed">
+                <nav id="main-nav" class="main-nav clearfix tabbed not-printable">
                     <ul>
                         <li ><a href="#about"><i class="icon-user"></i>Acerca de mi</a></li>
                         <li><a  href="#skills"><i class="icon-tools"></i>Habilidades</a></li>
-                        <li><a  href="#experiences"><i class="icon-chat"></i>Experiencia</a></li>
+                        <li><a  href="#experiences"><i class="icon-briefcase"></i>Experiencia</a></li>
                         <li><a  href="#education"><i class="icon-graduation-cap"></i>Educación</a></li>
                         <li><a  href="#courses"><i class="icon-bookmark"></i>Cursos</a></li>
                         <li><a  href="#services"><i class="icon-lifebuoy"></i>Servicios</a></li>
@@ -35,7 +60,7 @@
         <!--Fin main header -->
          
         <!--Botones sociales y créditos-->
-        <div class="bottom-header bgWhite ofsTSmall ofsBSmall tCenter">
+        <div class="bottom-header bgWhite ofsTSmall ofsBSmall tCenter not-printable">
             <ul class="social">
                 {% for sn in user.socialNetworks %}
                     <li><a href="{{ sn.url }}"><i class="{{ sn.snId.icon }}"></i></a></li>
@@ -161,7 +186,7 @@
                                             {% endfor %}
                                         </ul>
                                     </div>
-                                    <div class="col-md-1">
+                                    <div class="col-md-1 {{ psg.slug }}">
                                         <div class="title {{ psg.cssClass }}">
                                             <span>{{ psg.name }}</span>
                                         </div>
@@ -310,7 +335,7 @@
                 <!--Block content-->    
                 <div class="block-content">
                     <!--Timeline-->
-                    <div class="timeline education">
+                    <div class="timeline courses">
                         <!--Row-->  
                         <div class="row ">
                             <div class="col-md-12">
@@ -349,7 +374,7 @@
 
             <!-- Bloque  Servicios ···························································· -->
             <!--Main title-->
-            <div class="main-title">
+            <div class="main-title not-printable">
                 <h1><a name="services">Servicios</a></h1>
                 <div class="divider">
                     <div class="zigzag large clearfix "  data-svg-drawing="yes" >
@@ -362,7 +387,7 @@
             <!--Fin  main title-->
 
             <!--Content-->  
-            <div class="content">
+            <div class="content not-printable">
                 <!--Block content-->    
                 <div class="block-content ">
                     <!--Services-->
@@ -480,27 +505,9 @@
             <!-- ······ Fin Bloque Testimonios -->
             #}
 
-            <!-- Bloque  Botones Pie ·························································· -->
-            <!--Button-->
-            <div class="button margTop ofsInTop tCenter">
-                <div class="divider">
-                    <div class="zigzag large clearfix "  data-svg-drawing="yes" >
-                        <svg xml:space="preserve" viewBox="0 0 69.172 14.975" width="37" height="28" y="0px" x="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1">
-                            <path d="M1.357,12.26 10.807,2.81 20.328,12.332 29.781,2.879 39.223,12.321 48.754,2.79 58.286,12.321 67.815,2.793 "  style="stroke-dasharray: 93.9851, 93.9851; stroke-dashoffset: 0;"/>
-                        </svg>
-                    </div>
-                </div>
 
-                <!--Row-->  
-                <div class="row ">
-                    <div class="col-md-12">
-                        <a class="but opc-1 ico" href="#">Descarga mi cv</a>
-                        <a class="but opc-2 ico" href="#">Imprimemelo</a>
-                    </div>
-                </div>
-                <!--Fin  row-->
-            </div>
-            <!--Fin  button-->
+            <!-- Bloque  Botones Pie ·························································· -->
+            {{ _self.footButtons () }} {# Llamada al macro footButtons #}
             <!-- ······ Fin Bloque Botones Pie -->
         </div>
         <!--Fin  about-->
@@ -508,7 +515,7 @@
     <!-- ······ Fin about tab-->
 
     <!--Contact Tab-->
-    <section id="contact" class="bgWhite ofsInBottom">
+    <section id="contact" class="bgWhite ofsInBottom not-printable">
         <!--Contact -->
         <div class="contact">
             <!-- Bloque  Mapa ································································· -->
@@ -545,6 +552,7 @@
             </div>
             <!--End content-->
             <!-- ······ Fin Bloque Mapa-->
+
 
             {#
             <!-- Bloque Información de contacto ··············································· -->
@@ -608,6 +616,7 @@
             <!--End content-->
             <!-- ······ Fin Bloque Información de Contacto -->
             #}
+
 
             <!-- Bloque Envieme un e-mail ················································· -->
             <!--Main title-->
@@ -673,27 +682,9 @@
             <!--End content-->
             <!-- ······ Fin Bloque Envieme un e-mail -->
 
-            <!-- Bloque  Botones Pie ·························································· -->
-            <!--Button-->
-            <div class="button margTop ofsInTop tCenter">
-                <div class="divider">
-                    <div class="zigzag large clearfix "  data-svg-drawing="yes" >
-                        <svg xml:space="preserve" viewBox="0 0 69.172 14.975" width="37" height="28" y="0px" x="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1">
-                            <path d="M1.357,12.26 10.807,2.81 20.328,12.332 29.781,2.879 39.223,12.321 48.754,2.79 58.286,12.321 67.815,2.793 "  style="stroke-dasharray: 93.9851, 93.9851; stroke-dashoffset: 0;"/>
-                        </svg>
-                    </div>
-                </div>
 
-                <!--Row-->  
-                <div class="row ">
-                    <div class="col-md-12">
-                        <a class="but opc-1 ico" href="#">Descarga mi cv</a>
-                        <a class="but opc-2 ico" href="#">Imprimemelo</a>
-                    </div>
-                </div>
-                <!--Fin  row-->
-            </div>
-            <!--Fin  button-->
+            <!-- Bloque  Botones Pie ·························································· -->
+            {{ _self.footButtons () }} {# Llamada al macro footButtons #}
             <!-- ······ Fin Bloque Botones Pie -->
         </div>
         <!--End contact-->

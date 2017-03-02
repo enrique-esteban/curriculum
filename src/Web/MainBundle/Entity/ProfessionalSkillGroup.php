@@ -35,12 +35,20 @@ class ProfessionalSkillGroup
      */
     private $name;
 
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="slug", type="string", length=100)
+     */
+    private $slug;
+
     /**
      * @var string
      *
      * @ORM\Column(name="css_class", type="string", length=100)
      */
     private $cssClass;
+    
     
     /**
      * Constructor
@@ -82,6 +90,30 @@ class ProfessionalSkillGroup
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     *
+     * @return ProfessionalSkillGroup
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
     /**

@@ -56,7 +56,7 @@ class LoadProfessionalSkillData extends AbstractFixture implements OrderedFixtur
 
         $professionalSkill->setCurriculumId($this->getReference('curriculum'));
         $professionalSkill->setName('Symfony');
-        $professionalSkill->setGroup($this->getReference('cmd'));
+        $professionalSkill->setGroup($this->getReference('framework'));
         $professionalSkill->setPercentage(70);
 
         $manager->persist($professionalSkill);
@@ -66,7 +66,7 @@ class LoadProfessionalSkillData extends AbstractFixture implements OrderedFixtur
 
         $professionalSkill->setCurriculumId($this->getReference('curriculum'));
         $professionalSkill->setName('Prestashop');
-        $professionalSkill->setGroup($this->getReference('cmd'));
+        $professionalSkill->setGroup($this->getReference('framework'));
         $professionalSkill->setPercentage(60);
 
         $manager->persist($professionalSkill);
@@ -147,6 +147,16 @@ class LoadProfessionalSkillData extends AbstractFixture implements OrderedFixtur
 
         $professionalSkill->setCurriculumId($this->getReference('curriculum'));
         $professionalSkill->setName('Unity3D');
+        $professionalSkill->setGroup($this->getReference('otros'));
+        $professionalSkill->setPercentage(50);
+
+        $manager->persist($professionalSkill);
+
+        // Insertamos otra habilidad profesional:
+        $professionalSkill = new ProfessionalSkill();
+
+        $professionalSkill->setCurriculumId($this->getReference('curriculum'));
+        $professionalSkill->setName('Git');
         $professionalSkill->setGroup($this->getReference('otros'));
         $professionalSkill->setPercentage(50);
 

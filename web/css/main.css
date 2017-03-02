@@ -449,7 +449,7 @@
 
 
 .skill.des .progress {
-	border:1px solid #efefef;
+	border:1px solid #33373d;
 }
 
 
@@ -458,7 +458,7 @@
 }
 
 .skill.prs .progress {
-	border:1px solid #33373d;
+	border:1px solid #efefef;
 }
 
 
@@ -475,7 +475,7 @@
 
 
 .skill.des .progress .percentage {
-	background-color: #efefef;
+	background-color: #33373d;
 }
 
 
@@ -485,7 +485,7 @@
 
 
 .skill.prs .progress .percentage {
-	background-color: #33373d;
+	background-color: #efefef;
 }
 
 
@@ -523,7 +523,7 @@
 
 
 .skill .title.des{
-	border: 1px dashed #efefef;
+	border: 1px dashed #33373d;
 }
 
 .skill .title.dev{
@@ -531,7 +531,7 @@
 }
 
 .skill .title.prs{
-	border: 1px dashed #33373d;
+	border: 1px dashed #efefef;
 }
 
 
@@ -585,6 +585,10 @@
 
 .timeline.education:after{
 	content: '\e80c';
+}
+
+.timeline.courses:after{
+  content: '\e893';
 }
 
 
@@ -1537,6 +1541,37 @@ span.meta-date{
 	.button .but{margin-bottom:10px;}
 	.block-quote blockquote{padding-right:0;}
 	
+}
+
+
+@media print {
+  input, textarea{-webkit-appearance: none;-webkit-border-radius:0;}
+  .nopr {padding-right: 15px;}
+  .main-nav.tabbed ul li{float:left;width:25%;border-right:1px solid #26292e;border-bottom:none;}
+  .main-nav.tabbed ul li:last-child{border-right:none;border-bottom:none;}
+  .main-nav.tabbed ul li a{font-size:0;}
+  .main-nav.tabbed ul li a i {left: 0;text-align: center;width: 100%;}
+  .img-profile .name-profile {display:none;}
+  .bottom-header{margin-bottom:10px;}
+  .info ul.info-list{margin-bottom:10px;}
+  .info ul.info-list li .inf{left:-2px;}
+  .vc{display:inline !important;}
+  .skill .title{transform:rotate(0deg);-webkit-transform: rotate(0);position:static;margin-top:25px}
+  .block.service div{margin-bottom:30px;}
+  .block.service div:last-child{margin-bottom:0;}
+  .filter li{display:block; margin:10px 0;}
+  .post-meta li{float:none;}
+  .post-title h1, .post-title a{line-height:30px;display:block;}
+  span.meta-date{margin-left:0; margin-top:10px; margin-bottom:10px;}
+  .comments .replys.children{margin-left:40px;}
+  #map{height:300px;}
+  .address-info i{margin-left:-45px;}
+  .address-info p{line-height:30px;margin-bottom:60px;}
+  .contact-info li{width:auto;padding-bottom:80px;display:block;text-align:center;font-size:12px;}
+  .contact-info li:last-child{padding-bottom:0;}
+  .contact-info li .ico{top:-80px;}
+  .block-quote blockquote{padding-right:0;}
+  .not-printable {display:none;}
 }
 
 /* -------------------- End media queries -------------------- */
