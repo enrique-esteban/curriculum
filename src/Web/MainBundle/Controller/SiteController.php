@@ -56,15 +56,7 @@ class SiteController extends Controller
         
         $services = $this->getDoctrine()->getRepository('MainBundle:Service')->findByCurriculumId($curriculum->getId());
 
-        //$ = $this->getDoctrine()->getRepository('MainBundle:')
-
-        //$ = $this->getDoctrine()->getRepository('MainBundle:')
-
-        //$ = $this->getDoctrine()->getRepository('MainBundle:')
-
-        //$ = $this->getDoctrine()->getRepository('MainBundle:')
-
-
+        // Comprobamos que todos los datos obtenidos de la base de datos existan
         if (!$user) {
         	throw $this->createNotFoundException('Unable to find User post.');
         } elseif (!$curriculum) {
@@ -79,15 +71,7 @@ class SiteController extends Controller
         	throw $this->createNotFoundException('Unable to find Courses post.');
         } elseif (!$services) {
         	throw $this->createNotFoundException('Unable to find Service post.');
-        } /*elseif (!$professionalSkillGroups) {
-        	throw $this->createNotFoundException('Unable to find Professional post.');
-        } elseif (!$professionalSkillGroups) {
-        	throw $this->createNotFoundException('Unable to find Professional post.');
-        } elseif (!$professionalSkillGroups) {
-        	throw $this->createNotFoundException('Unable to find Professional post.');
-        }*/
-
-        //ld($professionalSkillGroups[0]->getProfessionalSkills()[0]);
+        }
 
 		return $this->render('MainBundle:Layout:index.html.twig', array(
                 'user' => $user,
@@ -97,10 +81,6 @@ class SiteController extends Controller
                 'educationPlaces' => $educationPlaces,
                 'courses' => $courses,
                 'services' => $services,
-                //'' => ,
-                //'' => ,
-                //'' => ,
-                //'' => ,
             )
         );
     }
@@ -113,33 +93,57 @@ class SiteController extends Controller
 	 */
 	public function contactAction()
 	{
+        $user = $this->getDoctrine()->getRepository('UserBundle:User')->findOneByUsernameWithSocialNetworks('enrique');
+
+        if (!$user) {
+            throw $this->createNotFoundException('Unable to find User post.');
+        }
+
 		$request = $this->getRequest();
 
 		$mail = new ContactMail();
 
+        // Para los email de la sección contacto vamos a crear un formulario in-situ
 		$form = $this->createFormBuilder($mail)
 			->add('name', 'text', array(
-					'label' => 'Nombre',
-					'max_length' => '50'
+					'label' => false,
+					'max_length' => '50',
+                    'attr' => array(
+                        'placeholder' => 'Nombre'
+                    )
 				)
 			)
 			->add('email', 'email', array(
-					'max_length' => '100'
+                    'label' => false,
+					'max_length' => '100',
+                    'attr' => array(
+                        'placeholder' => 'Tú dirección de eMail'
+                    )
 				)
 			)
 	        ->add('subject', 'text', array(
-	        		'label' => 'Asunto',
-	        		'max_length' => '50'
+	        		'label' => false,
+	        		'max_length' => '50',
+                    'attr' => array(
+                        'placeholder' => 'Asunto'
+                    )
 	        	)
 	        )
 			->add('body', 'textarea', array(
-					'label' => 'Cuerpo',
-					'max_length' => '255'
+					'label' => false,
+					'max_length' => '255',
+                    'attr' => array(
+                        'placeholder' => 'Mensaje',
+                        'rows' => '10'
+                    )
 	        	)
 	        )
 			->add('submit', 'submit', array(
-					'label' => 'Enviar'
-	        	)
+					'label' => 'Envía tú eMail',
+                    'attr' => array(
+                        'class' => 'but opc-2'
+                    )
+                )
 	        )
 			->getForm();
 
@@ -166,7 +170,11 @@ class SiteController extends Controller
   		    return $this->redirect($this->generateUrl('contact_form'));
         }
     	
-        return $this->render('MainBundle:Static:contact.html.twig', array('form' => $form->createView()));
+        return $this->render('MainBundle:Static:contact.html.twig', array(
+                'user' => $user,
+                'form' => $form->createView()
+            )
+        );
 	}
 
 	/**
@@ -188,6 +196,6 @@ class SiteController extends Controller
 	 */
 	public function testAction($var = "")
 	{
-	    return $this->render('MainBundle:Static:test.html.twig', array( 'var' => $var));
+	    return $this->render('MainBundle:Static:test.html.twig', array('var' => $var));
 	}
 }

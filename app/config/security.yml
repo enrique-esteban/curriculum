@@ -1,6 +1,6 @@
 security:
     firewalls:
-        frontend:
+        frontend: # Firewall utilizado solo para la parte pública (sólo en el blog)
             pattern: ^/*
             anonymous: ~
             form_login:

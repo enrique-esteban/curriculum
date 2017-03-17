@@ -4,75 +4,46 @@
 
 {# comienzo bloque leftContent #}
 {% block leftContent %}
-    {# Definición de macros #}
-    {% macro footButtons () %}
-        <!--Button-->
-        <div class="button margTop ofsInTop tCenter not-printable">
-            <div class="divider">
-                <div class="zigzag large clearfix "  data-svg-drawing="yes" >
-                    <svg xml:space="preserve" viewBox="0 0 69.172 14.975" width="37" height="28" y="0px" x="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1">
-                        <path d="M1.357,12.26 10.807,2.81 20.328,12.332 29.781,2.879 39.223,12.321 48.754,2.79 58.286,12.321 67.815,2.793 "  style="stroke-dasharray: 93.9851, 93.9851; stroke-dashoffset: 0;"/>
-                    </svg>
-                </div>
-            </div>
-
-            <!--Row-->  
-            <div class="row ">
-                <div class="col-md-12">
-                    <a class="but opc-1 ico" href="#">Descarga mi cv</a>
-                    <a class="but opc-2 ico" href="#" onclick="javascript:window.print()">Imprimemelo</a>
-                </div>
-            </div>
-            <!--Fin  row-->
-        </div>
-        <!--Fin  button-->
-    {% endmacro %}
-    {# Fin de la Definición de macros #}
-
     <!--Header ················································································ -->
     <header id="header">
+        {% import 'MainBundle:Layout:header.html.twig' as header %}
+        
         <!--Main header-->
         <div class="main-header">
             <!--Profile image-->
-            <figure class="img-profile">
-                <img src="{{ asset(user.image) }}" alt="{{ user.firstName ~ " " ~ user.lastname }}"/>
-                
-                <figcaption class="name-profile not-printable">
-                    <span>{{ user.firstName ~ " " ~ user.lastname }} <sup>&reg;</sup></span>
-                </figcaption>
-            </figure>
+            {{ header.profileImage(
+                    user.image,
+                    user.firstName ~ " " ~ user.lastName,
+                    user.firstName ~ " " ~ user.lastName
+                ) 
+            }}
             <!--Fin profile image-->
 
             <!--Main navigation-->
-                <nav id="main-nav" class="main-nav clearfix tabbed not-printable">
-                    <ul>
-                        <li ><a href="#about"><i class="icon-user"></i>Acerca de mi</a></li>
-                        <li><a  href="#skills"><i class="icon-tools"></i>Habilidades</a></li>
-                        <li><a  href="#experiences"><i class="icon-briefcase"></i>Experiencia</a></li>
-                        <li><a  href="#education"><i class="icon-graduation-cap"></i>Educación</a></li>
-                        <li><a  href="#courses"><i class="icon-bookmark"></i>Cursos</a></li>
-                        <li><a  href="#services"><i class="icon-lifebuoy"></i>Servicios</a></li>
-                        <li><a  href="#contact"><i class="icon-phone"></i>Contacto</a></li>
-                    </ul>
-                </nav>
+            {{ header.navMenu({
+                    0: { href: '#about', icon: 'user', name: 'Acerca de mi' },
+                    1: { href: '#skills', icon: 'tools', name: 'Habilidades' },
+                    2: { href: '#experiences', icon: 'briefcase', name: 'Experiencia' },
+                    3: { href: '#education', icon: 'graduation-cap', name: 'Educación' },
+                    4: { href: '#courses', icon: 'bookmark', name: 'Cursos' },
+                    5: { href: '#services', icon: 'lifebuoy', name: 'Servicios' },
+                    6: { href: path('contact_form'), icon: 'phone', name: 'Contacto' },   
+                })
+            }}
             <!--Fin main navigation -->
         </div>
         <!--Fin main header -->
          
         <!--Botones sociales y créditos-->
-        <div class="bottom-header bgWhite ofsTSmall ofsBSmall tCenter not-printable">
-            <ul class="social">
-                {% for sn in user.socialNetworks %}
-                    <li><a href="{{ sn.url }}"><i class="{{ sn.snId.icon }}"></i></a></li>
-                {% endfor %}
-            </ul>
-        </div>
+        {{ header.socialButtons(user.socialNetworks) }}
         <!--Fin botones sociales y crédito-->
     </header>
     <!-- ······ Fin header -->
 {% endblock %} {# fin bloque leftContent #}
-{% block rightContent %} {# comienzo bloque rightContent #}
-    <!--About Tab ············································································· -->
+
+{# comienzo bloque rightContent #}
+{% block rightContent %}
+     <!-- Bloque Curriculum ··································································· -->
     <section id="about" class="bgWhite ofsInBottom">
         <!--About-->
         <div class="about">
@@ -507,187 +478,33 @@
 
 
             <!-- Bloque  Botones Pie ·························································· -->
-            {{ _self.footButtons () }} {# Llamada al macro footButtons #}
+            <!--Button-->
+            <div class="button margTop ofsInTop tCenter not-printable">
+                <div class="divider">
+                    <div class="zigzag large clearfix "  data-svg-drawing="yes" >
+                        <svg xml:space="preserve" viewBox="0 0 69.172 14.975" width="37" height="28" y="0px" x="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1">
+                            <path d="M1.357,12.26 10.807,2.81 20.328,12.332 29.781,2.879 39.223,12.321 48.754,2.79 58.286,12.321 67.815,2.793 "  style="stroke-dasharray: 93.9851, 93.9851; stroke-dashoffset: 0;"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!--Row-->  
+                <div class="row ">
+                    <div class="col-md-12">
+                        <a class="but opc-1 ico" href="{{ asset('downloads/curriculum/curriculum.odt') }}">Descarga mi cv</a>
+                        <a class="but opc-2 ico" href="#" onclick="javascript:window.print()">Imprimemelo</a>
+                    </div>
+                </div>
+                <!--Fin  row-->
+            </div>
+            <!--Fin  button-->
             <!-- ······ Fin Bloque Botones Pie -->
         </div>
         <!--Fin  about-->
     </section>
-    <!-- ······ Fin about tab-->
-
-    <!--Contact Tab-->
-    <section id="contact" class="bgWhite ofsInBottom not-printable">
-        <!--Contact -->
-        <div class="contact">
-            <!-- Bloque  Mapa ································································· -->
-            <!--Main title-->
-            <div class="main-title">
-                <h1>Mapa</h1>
-                <div class="divider">
-                    <div class="zigzag large clearfix "  data-svg-drawing="yes" >
-                        <svg xml:space="preserve" viewBox="0 0 69.172 14.975" width="37" height="28" y="0px" x="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1">
-                        <path d="M1.357,12.26 10.807,2.81 20.328,12.332 29.781,2.879 39.223,12.321 48.754,2.79 58.286,12.321 67.815,2.793 "  style="stroke-dasharray: 93.9851, 93.9851; stroke-dashoffset: 0;"/>
-                        </svg>
-                    </div>
-                </div>
-            </div>  
-            <!--End main title-->
-
-            <!--Content-->  
-            <div class="content">
-                <!--Block content-->    
-                <div class="block-content ">
-                    <!--Map-->
-                    <div class="block-map">
-                        <!--Row-->
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div id="map"></div>
-                            </div>
-                        </div>
-                        <!--End row-->
-                    </div>
-                    <!--End map-->
-                </div>
-                <!--End block content-->
-            </div>
-            <!--End content-->
-            <!-- ······ Fin Bloque Mapa-->
-
-
-            {#
-            <!-- Bloque Información de contacto ··············································· -->
-            <!--Main title-->
-            <div class="main-title">
-                <h1>Información de contacto</h1>
-                <div class="divider">
-                    <div class="zigzag large clearfix "  data-svg-drawing="yes" >
-                        <svg xml:space="preserve" viewBox="0 0 69.172 14.975" width="37" height="28" y="0px" x="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1">
-                            <path d="M1.357,12.26 10.807,2.81 20.328,12.332 29.781,2.879 39.223,12.321 48.754,2.79 58.286,12.321 67.815,2.793 "  style="stroke-dasharray: 93.9851, 93.9851; stroke-dashoffset: 0;"/>
-                        </svg>
-                    </div>
-                </div>
-            </div>  
-            <!--End main title-->
-
-            <!--Content-->  
-            <div class="content">
-                <!--Block content-->    
-                <div class="block-content ">
-                    <!--Info-->
-                    <div class="block-info">
-                        <!--Row-->
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="info-holder   margTMedium">
-                                    <!--Address info--> 
-                                    <div class="address-info">
-                                        <i class="icon-location"></i>
-                                        <p>The Company Name Inc.1234 Street Road <br>City Name,IN 567 890.</p>
-                                    </div>
-                                    <!--End address info-->
-
-                                    <!--Contact info-->
-                                    <div class="contact-info tCenter">
-                                        <ul>
-                                            <li>
-                                                <div class="ico"><i class="icon-mail"></i></div>
-                                                <p>Email : name@gmail.com </p>
-                                            </li>
-                                            <li>
-                                                <div class="ico"><i class="icon-phone"></i></div>
-                                                <p>Tel : + 123-456-789</p>
-                                            </li>
-                                            <li>
-                                                <div class="ico"><i class="icon-link"></i></div>
-                                                <p>WebSite : <a href="#">www.yoursite.com</a></p>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <!--End contact info--> 
-                                </div>
-                            </div>
-                        </div>
-                        <!--End row-->
-                    </div>
-                    <!--End info-->
-                </div>
-                <!--End block content-->
-            </div>
-            <!--End content-->
-            <!-- ······ Fin Bloque Información de Contacto -->
-            #}
-
-
-            <!-- Bloque Envieme un e-mail ················································· -->
-            <!--Main title-->
-            <div class="main-title">
-                <h1>Envíame un e-mail</h1>
-                <div class="divider">
-                    <div class="zigzag large clearfix "  data-svg-drawing="yes" >
-                        <svg xml:space="preserve" viewBox="0 0 69.172 14.975" width="37" height="28" y="0px" x="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1">
-                            <path d="M1.357,12.26 10.807,2.81 20.328,12.332 29.781,2.879 39.223,12.321 48.754,2.79 58.286,12.321 67.815,2.793 "  style="stroke-dasharray: 93.9851, 93.9851; stroke-dashoffset: 0;"/>
-                        </svg>
-                    </div>
-                </div>
-            </div>  
-            <!--End main title-->
-
-            <!--Content-->  
-            <div class="content">
-                <!--Block content-->    
-                <div class="block-content ">
-                    <!--Contact-->
-                    <div class="block-contact margBSSmall">
-                        <!--Row-->
-                        <div class="row">
-                            <div class="col-md-12">
-                                <form class="contact-form" method="post" action="send.php">
-                                    <!--Input columns-->
-                                    <div class="input-columns clearfix">
-                                        <div class="column1">
-                                            <div class="column-inner">
-                                                <input type="text" placeholder="Nombre" value="" id="name" name="name">
-                                            </div>
-                                        </div>
-
-                                        <!--Column-->
-                                        <div class="column2">
-                                            <div class="column-inner">
-                                                <input type="text" placeholder="Email" value="" id="email" name="email">
-                                            </div>
-                                        </div>
-                                        <!--End column-->
-                                    </div>
-                                    <!--End input columns-->
-
-                                    <input type="text" placeholder="Asunto" value="" id="subject" name="subject">
-
-                                    <textarea name="message" placeholder="Mensaje" id="message" cols="45" rows="10"></textarea>
-
-                                    <input type="submit" value="Enviar" class="but opc-2 submit">
-                                </form>
-                                
-                                <!--Contact form message-->
-                                <div id="success"><h2>Tú mensaje ha sido enviado. ¡Gracias!</h2></div>
-                                <div id="error"><h2>Lo siento tu mensaje no se ha podido enviar.</h2></div>
-                                <!--End contact form message-->
-                            </div>
-                        </div>
-                        <!--End row-->
-                    </div>
-                    <!--End contact-->
-                </div>
-                <!--End block content-->
-            </div>
-            <!--End content-->
-            <!-- ······ Fin Bloque Envieme un e-mail -->
-
-
-            <!-- Bloque  Botones Pie ·························································· -->
-            {{ _self.footButtons () }} {# Llamada al macro footButtons #}
-            <!-- ······ Fin Bloque Botones Pie -->
-        </div>
-        <!--End contact-->
-    </section>
-    <!--End contact tab-->
+    <!-- ······ Fin bloque curriculum -->
 {% endblock %} {# fin bloque rightContent #}
+
+{% block jsBody %}
+    {{ parent() }}
+{% endblock %}

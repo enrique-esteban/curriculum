@@ -1,0 +1,31 @@
+{% macro profileImage(image, alt, title) %}
+    <figure class="img-profile">
+        <img src="{{ asset(image) }}" alt="{{ alt }}"/>
+        
+        {% if title %}
+            <figcaption class="name-profile not-printable">
+                <span>{{ title }} <sup>&reg;</sup></span>
+            </figcaption>
+        {% endif %}
+    </figure>
+{% endmacro %}
+
+{% macro navMenu(links) %}
+    <nav id="main-nav" class="main-nav clearfix tabbed not-printable">
+        <ul>
+            {% for link in links %}
+                <li><a href="{{ link.href }}"><i class="icon-{{ link.icon }}"></i>{{ link.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </nav>
+{% endmacro %}
+
+{% macro socialButtons(socialNetworks) %} 
+    <div class="bottom-header bgWhite ofsTSmall ofsBSmall tCenter not-printable">
+        <ul class="social">
+            {% for sn in socialNetworks %}
+                <li><a href="{{ sn.url }}"><i class="{{ sn.snId.icon }}"></i></a></li>
+           {% endfor %}
+        </ul>
+    </div>
+{% endmacro %}

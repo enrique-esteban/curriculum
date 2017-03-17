@@ -1244,7 +1244,7 @@ span.meta-date{
 }
 
 
-.contact-form input[type="text"], .contact-form textarea, .reply-form input[type="text"], .reply-form textarea {
+.contact-form input[type="text"], .contact-form input[type="email"], .contact-form textarea, .reply-form input[type="text"], .reply-form input[type="email"], .reply-form textarea {
     background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
     border: 1px solid #efefef;
     color: #666666;
@@ -1271,7 +1271,7 @@ span.meta-date{
 }
 
 
-.contact-form .submit, .reply-form .submit {
+.contact-form .submit, .reply-form .submit, .contact-form button, .reply-form button {
     bottom: -15px;
     cursor: pointer;
     position: absolute;
@@ -1289,7 +1289,7 @@ span.meta-date{
 }
 
 
-.contact-form .submit:hover, .reply-form .submit:hover {
+.contact-form .submit:hover, .reply-form .submit:hover, .contact-form button:hover, .reply-form button:hover {
     background:#33373d;
 /* Prevent background color leak outs */
 	 -webkit-background-clip: padding-box; 
@@ -1315,7 +1315,7 @@ span.meta-date{
 }
 
 
-.errorForm {
+.errorForm, input:invalid, textarea:invalid {
     border: 1px solid #45a2b3 !important;
 }
 

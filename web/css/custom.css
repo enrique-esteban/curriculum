@@ -1,15 +1,15 @@
 /*
  *   Copyright 2017
  *   
- *   Created by : Enrique Esteban Plaza
+ *   Autor: Enrique José Esteban Plaza
  */
 
 
-/* Table of Content
-==================================================
+/* Tabla de contenidos
+===============================================================================================
 1-Return to Top Arrow
 2-Ajuste de las etiquetas de habilidades profesionales
--Media queries
+3-Media queries
 
 
 /* 1 - Return to Top Arrow */
@@ -55,7 +55,7 @@
     color: #fff;
     top: 5px;
 }
-/* End Return to Top Arrow */
+/* Fin Return to Top Arrow */
 
 
 /* 2 - Ajuste de las etiquetas de habilidades profesionales */
@@ -74,12 +74,12 @@
 .col-md-1.others {
     right: -4px;
 }
-/* End Ajuste de las etiquetas de habilidades profesionales */
+/* Fin Ajuste de las etiquetas de habilidades profesionales */
 
 
 /* Media queries */
 
-/*iPad lanscape*/
+/* iPad lanscape */
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
     #return-to-top:hover {
         background: rgba(51, 55, 61, 0.5);
@@ -101,7 +101,7 @@
     }
 }
 
-/* Mobile Landscape Size -> Tablet Portrait size*/
+/* Mobile Landscape Size -> Tablet Portrait size */
 @media only screen and (min-width: 480px) and (max-width: 767px) {
     #return-to-top:hover {
         background: rgba(51, 55, 61, 0.5);
@@ -126,4 +126,4 @@
         top: 10px;
     }
 }
-/* End media queries */
+/* Fin media queries */

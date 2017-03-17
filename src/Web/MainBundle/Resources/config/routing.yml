@@ -1,5 +1,5 @@
 # src/Web/MainBundle/Resources/config/routing.yml
-main_page:
+index:
     pattern:  /
     defaults: { _controller: MainBundle:Site:index }
 

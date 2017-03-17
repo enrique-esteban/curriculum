@@ -10,22 +10,30 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class ContactMail
 {
-    private $id;
-
+     /**
+     * @Assert\NotBlank()
+     */
     protected $name;
 
+    /**
+     * @Assert\NotBlank()
+     */
     protected $email;
 
+     /**
+     * @Assert\NotBlank()
+     */
     protected $subject;
 
+     /**
+     * @Assert\NotBlank()
+     */
     protected $body;
 
+     /**
+     * @Assert\Type('\DateTime')
+     */
     protected $date;
-
-    public function getId()
-    {
-        return $this->id;
-    }
 
     public function setName($name)
     {

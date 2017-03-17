@@ -1,27 +1,215 @@
-{% extends 'MainBundle:Layout:layout.html.twig' %}
+{% extends 'MainBundle:Layout:frontend.html.twig' %}
 
-{% block title %}Formulario de contacto{% endblock %}
+{% block title %}Contacto{% endblock %}
 
-{% block section %}
-    <h1>{{ block('title') }}</h1>
-    {% for flashMessage in app.session.flashbag.get('notice') %}
-        <div>
-            {{ flashMessage }}
+{# comienzo bloque leftContent #}
+{% block leftContent %}
+    <!--Header ················································································ -->
+    <header id="header">
+        {% import 'MainBundle:Layout:header.html.twig' as header %}
+        
+        <!--Main header-->
+        <div class="main-header">
+            <!--Profile image-->
+            {{ header.profileImage(
+                    user.image,
+                    user.firstName ~ " " ~ user.lastName,
+                    user.firstName ~ " " ~ user.lastName
+                ) 
+            }}
+            <!--Fin profile image-->
+
+            <!--Main navigation-->
+            {{ header.navMenu({
+                    0: { href: path('index'), icon: 'left-open', name: 'Atrás' },
+                })
+            }}
+            <!--Fin main navigation -->
         </div>
-    {% endfor %}
+        <!--Fin main header -->
+         
+        <!--Botones sociales y créditos-->
+        {{ header.socialButtons(user.socialNetworks) }}
+        <!--Fin botones sociales y crédito-->
+    </header>
+    <!-- ······ Fin header -->
+{% endblock %} {# fin bloque leftContent #}
 
-    <form action="{{ path('contact_form') }}" method="post" {{ form_enctype(form) }}>
-        {{ form_errors(form) }}
+{# comienzo bloque rightContent #}
+{% block rightContent %} 
+    <section id="contact" class="bgWhite ofsInBottom not-printable">
+        <!--Contact -->
+        <div class="contact">
+            <!-- Bloque  Mapa ································································· -->
+            <!--Main title-->
+            <div class="main-title">
+                <h1>Mapa</h1>
+                <div class="divider">
+                    <div class="zigzag large clearfix "  data-svg-drawing="yes" >
+                        <svg xml:space="preserve" viewBox="0 0 69.172 14.975" width="37" height="28" y="0px" x="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1">
+                        <path d="M1.357,12.26 10.807,2.81 20.328,12.332 29.781,2.879 39.223,12.321 48.754,2.79 58.286,12.321 67.815,2.793 "  style="stroke-dasharray: 93.9851, 93.9851; stroke-dashoffset: 0;"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>  
+            <!--End main title-->
 
-        {{ form_row(form.name) }}
-        {{ form_row(form.email) }}
-        {{ form_row(form.subject) }}
-        {{ form_row(form.body) }}
+            <!--Content-->  
+            <div class="content">
+                <!--Block content-->    
+                <div class="block-content ">
+                    <!--Map-->
+                    <div class="block-map">
+                        <!--Row-->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div id="map"></div>
+                            </div>
+                        </div>
+                        <!--End row-->
+                    </div>
+                    <!--End map-->
+                </div>
+                <!--End block content-->
+            </div>
+            <!--End content-->
+            <!-- ······ Fin Bloque Mapa-->
 
-        {{ form_rest(form) }}
-    </form>
-{% endblock %}
 
-{% block aside %}
-    {{ parent() }}
-{% endblock %}
+            {#
+            <!-- Bloque Información de contacto ··············································· -->
+            <!--Main title-->
+            <div class="main-title">
+                <h1>Información de contacto</h1>
+                <div class="divider">
+                    <div class="zigzag large clearfix "  data-svg-drawing="yes" >
+                        <svg xml:space="preserve" viewBox="0 0 69.172 14.975" width="37" height="28" y="0px" x="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1">
+                            <path d="M1.357,12.26 10.807,2.81 20.328,12.332 29.781,2.879 39.223,12.321 48.754,2.79 58.286,12.321 67.815,2.793 "  style="stroke-dasharray: 93.9851, 93.9851; stroke-dashoffset: 0;"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>  
+            <!--End main title-->
+
+            <!--Content-->  
+            <div class="content">
+                <!--Block content-->    
+                <div class="block-content ">
+                    <!--Info-->
+                    <div class="block-info">
+                        <!--Row-->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="info-holder   margTMedium">
+                                    <!--Address info--> 
+                                    <div class="address-info">
+                                        <i class="icon-location"></i>
+                                        <p>The Company Name Inc.1234 Street Road <br>City Name,IN 567 890.</p>
+                                    </div>
+                                    <!--End address info-->
+
+                                    <!--Contact info-->
+                                    <div class="contact-info tCenter">
+                                        <ul>
+                                            <li>
+                                                <div class="ico"><i class="icon-mail"></i></div>
+                                                <p>Email : name@gmail.com </p>
+                                            </li>
+                                            <li>
+                                                <div class="ico"><i class="icon-phone"></i></div>
+                                                <p>Tel : + 123-456-789</p>
+                                            </li>
+                                            <li>
+                                                <div class="ico"><i class="icon-link"></i></div>
+                                                <p>WebSite : <a href="#">www.yoursite.com</a></p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!--End contact info--> 
+                                </div>
+                            </div>
+                        </div>
+                        <!--End row-->
+                    </div>
+                    <!--End info-->
+                </div>
+                <!--End block content-->
+            </div>
+            <!--End content-->
+            <!-- ······ Fin Bloque Información de Contacto -->
+            #}
+
+
+            <!-- Bloque Envieme un e-mail ················································· -->
+            <!--Main title-->
+            <div class="main-title">
+                <h1>Envíame un e-mail</h1>
+                <div class="divider">
+                    <div class="zigzag large clearfix "  data-svg-drawing="yes" >
+                        <svg xml:space="preserve" viewBox="0 0 69.172 14.975" width="37" height="28" y="0px" x="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1">
+                            <path d="M1.357,12.26 10.807,2.81 20.328,12.332 29.781,2.879 39.223,12.321 48.754,2.79 58.286,12.321 67.815,2.793 "  style="stroke-dasharray: 93.9851, 93.9851; stroke-dashoffset: 0;"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>  
+            <!--End main title-->
+
+            <!--Content-->  
+            <div class="content">
+                <!--Block content-->    
+                <div class="block-content ">
+                    <!--Contact-->
+                    <div class="block-contact margBSSmall">
+                        <!--Row-->
+                        <div class="row">
+                            <div class="col-md-12">
+                                {#<form class="contact-form" method="post" action="send.php">#}
+                                {{ form_start(form, { 'attr': {'class': 'contact-form'} }) }}
+                                    <!--Input columns-->
+                                    <div class="input-columns clearfix">
+                                        <div class="column1">
+                                            <div class="column-inner">
+                                                {#<input type="text" placeholder="Nombre" value="" id="name" name="name">#}
+                                                 {{ form_row(form.name) }}
+                                            </div>
+                                        </div>
+
+                                        <!--Column-->
+                                        <div class="column2">
+                                            <div class="column-inner">
+                                                {#<input type="text" placeholder="Email" value="" id="email" name="email">#}
+                                                {{ form_row(form.email) }}
+                                            </div>
+                                        </div>
+                                        <!--End column-->
+                                    </div>
+                                    <!--End input columns-->
+
+                                    {#<input type="text" placeholder="Asunto" value="" id="subject" name="subject">#}
+                                    {{ form_row(form.subject) }}
+
+                                    {#<textarea name="message" placeholder="Mensaje" id="message" cols="45" rows="10"></textarea>#}
+                                    {{ form_row(form.body) }}
+
+                                    {#<input type="submit" value="Enviar" class="but opc-2 submit">#}
+                                    {{ form_row(form.submit) }}
+                                {#</form>#}
+                                {{ form_end(form) }}
+                                
+                                <!--Contact form message-->
+                                <div id="success"><h2>Tú mensaje ha sido enviado. ¡Gracias!</h2></div>
+                                <div id="error"><h2>Lo siento tu mensaje no se ha podido enviar.</h2></div>
+                                <!--End contact form message-->
+                            </div>
+                        </div>
+                        <!--End row-->
+                    </div>
+                    <!--End contact-->
+                </div>
+                <!--End block content-->
+            </div>
+            <!--End content-->
+            <!-- ······ Fin Bloque Envieme un e-mail -->
+        <!--End contact-->
+    </section>
+{% endblock %} {# fin bloque rightContent #}
