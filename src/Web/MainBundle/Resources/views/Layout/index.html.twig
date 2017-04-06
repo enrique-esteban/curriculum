@@ -1,6 +1,7 @@
 {% extends 'MainBundle:Layout:frontend.html.twig' %}
 
-{% block title %}CV - Enrique José Esteban Plaza{% endblock %}
+{# comienzo bloque title #}
+{% block title %}CV - Enrique José Esteban Plaza{% endblock %} {# fin bloque leftContent #}
 
 {# comienzo bloque leftContent #}
 {% block leftContent %}
@@ -13,7 +14,7 @@
             <!--Profile image-->
             {{ header.profileImage(
                     user.image,
-                    user.firstName ~ " " ~ user.lastName,
+                    "Fotografía de " ~ user.firstName ~ " " ~ user.lastName ~ ".",
                     user.firstName ~ " " ~ user.lastName
                 ) 
             }}
@@ -21,13 +22,14 @@
 
             <!--Main navigation-->
             {{ header.navMenu({
-                    0: { href: '#about', icon: 'user', name: 'Acerca de mi' },
-                    1: { href: '#skills', icon: 'tools', name: 'Habilidades' },
-                    2: { href: '#experiences', icon: 'briefcase', name: 'Experiencia' },
-                    3: { href: '#education', icon: 'graduation-cap', name: 'Educación' },
-                    4: { href: '#courses', icon: 'bookmark', name: 'Cursos' },
-                    5: { href: '#services', icon: 'lifebuoy', name: 'Servicios' },
-                    6: { href: path('contact_form'), icon: 'phone', name: 'Contacto' },   
+                    0: { href: '#about', icon: 'user', name: 'Acerca de mi', blank: 0 },
+                    1: { href: '#skills', icon: 'tools', name: 'Habilidades', blank: 0 },
+                    2: { href: '#experiences', icon: 'briefcase', name: 'Experiencia', blank: 0 },
+                    3: { href: '#education', icon: 'graduation-cap', name: 'Educación', blank: 0 },
+                    4: { href: '#courses', icon: 'bookmark', name: 'Cursos', blank: 0 },
+                    5: { href: '#services', icon: 'lifebuoy', name: 'Servicios', blank: 0 },
+                    6: { href: path('contact_form'), icon: 'phone', name: 'Contacto', blank: 0 },
+                    7: { href: path('recent_blog'), icon: 'chat', name: 'Blog', blank: 1 },
                 })
             }}
             <!--Fin main navigation -->
@@ -504,7 +506,3 @@
     </section>
     <!-- ······ Fin bloque curriculum -->
 {% endblock %} {# fin bloque rightContent #}
-
-{% block jsBody %}
-    {{ parent() }}
-{% endblock %}

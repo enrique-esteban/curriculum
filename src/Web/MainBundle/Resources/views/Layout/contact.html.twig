@@ -1,6 +1,80 @@
 {% extends 'MainBundle:Layout:frontend.html.twig' %}
 
-{% block title %}Contacto{% endblock %}
+{# comienzo bloque title #}
+{% block title %}Contacto{% endblock %} {# fin bloque title #}
+
+{# comienzo bloque jsHead #}
+{% block jsHead %}
+    {{ parent() }}
+    
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;libraries=places&amp;key=AIzaSyAjhzYKZ3kQM1ud2xnQu1O5aCXxGIxkCzc&amp;callback=initialize"></script>
+    
+
+    <script type="text/javascript">
+        function initialize() {
+            lat = 36.421380;
+            lng = -6.160371;
+
+            // Estilos un array para los estilos
+            var styles = [
+                {
+                    stylers: [
+                        { saturation: -100 }
+
+                    ]
+                },
+                {
+                    featureType: 'road',
+                    elementType: 'geometry',
+                    stylers: [
+                        { hue: "#74b7b0" },
+                        { visibility: 'simplified' }
+                    ]
+                },
+                {
+                    featureType: 'road',
+                    elementType: 'labels',
+                    stylers: [
+                        { visibility: 'on' }
+                    ]
+                }
+            ];
+
+            // Crea un nuevo StyledMapType object, pasandole el array de estilos,
+            //    así como el nombre que se mostrará en el "map type control".
+            var customMap = new google.maps.StyledMapType(styles, {name: 'Styled Map'});
+
+            // Crea un objeto mapa, e incluye el MapTypeId para añadir a
+            //    el "map type control".
+            var mapOptions = {
+                zoom: 14,
+                scrollwheel: false,
+                disableDefaultUI: true,
+                center: new google.maps.LatLng( lat, lng ),
+                mapTypeControlOptions: {
+                    mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style']
+                }
+            };
+
+            map = new google.maps.Map(document.getElementById('map'), mapOptions);
+            myLatlng = new google.maps.LatLng( lat, lng );
+
+            marker = new google.maps.Marker({
+                position: myLatlng,
+                map: map,
+                icon: {
+                    url: "{{asset('images/marker.png')}}",
+                    scaledSize: new google.maps.Size(26, 42)
+                    }
+            });
+
+            map.mapTypes.set('map_style', customMap);
+            map.setMapTypeId('map_style');
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+{% endblock %} {# fin bloque jsHead #}
 
 {# comienzo bloque leftContent #}
 {% block leftContent %}
@@ -13,7 +87,7 @@
             <!--Profile image-->
             {{ header.profileImage(
                     user.image,
-                    user.firstName ~ " " ~ user.lastName,
+                    "Fotografía de " ~ user.firstName ~ " " ~ user.lastName ~ ".",
                     user.firstName ~ " " ~ user.lastName
                 ) 
             }}
@@ -21,12 +95,13 @@
 
             <!--Main navigation-->
             {{ header.navMenu({
-                    0: { href: path('index'), icon: 'left-open', name: 'Atrás' },
+                    0: { href: path('index'), icon: 'left-open', name: 'Atrás', blank: 0 },
                 })
             }}
             <!--Fin main navigation -->
         </div>
         <!--Fin main header -->
+
          
         <!--Botones sociales y créditos-->
         {{ header.socialButtons(user.socialNetworks) }}
@@ -210,6 +285,7 @@
             </div>
             <!--End content-->
             <!-- ······ Fin Bloque Envieme un e-mail -->
+        </div>
         <!--End contact-->
     </section>
 {% endblock %} {# fin bloque rightContent #}

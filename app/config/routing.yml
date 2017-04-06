@@ -1,12 +1,21 @@
 blog:
-    resource: "@BlogBundle/Resources/config/routing.yml"
+    resource: "@BlogBundle/Controller/"
     prefix:   /blog
 
 user_bundle:
-    resource: "@UserBundle/Resources/config/routing.yml"
+    resource: "@UserBundle/Controller/"
     prefix:   /user
 
 main_bundle:
-    resource: "@MainBundle/Resources/config/routing.yml"
+    resource: "@MainBundle/Controller/"
+    type: annotation
     prefix:   /
 
+# Ruta de la portada básica del sitio (sin ningún parámetro)
+# esta ruta es opcional, ya que la aplicación puede funcionar bien
+# solamente con la ruta 'portada' y sus valores por defecto
+_index:
+     path:  /
+     defaults:
+          _controller: FrameworkBundle:Redirect:redirect
+          route: index

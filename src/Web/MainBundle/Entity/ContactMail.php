@@ -31,7 +31,9 @@ class ContactMail
     protected $body;
 
      /**
-     * @Assert\Type('\DateTime')
+     * @var \DateTime
+     * 
+     * @Assert\Type('\DateTime', nullable=true)
      */
     protected $date;
 

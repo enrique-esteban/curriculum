@@ -10,11 +10,15 @@
     </figure>
 {% endmacro %}
 
-{% macro navMenu(links) %}
+{% macro navMenu(links, blank, search = 0) %}
     <nav id="main-nav" class="main-nav clearfix tabbed not-printable">
         <ul>
             {% for link in links %}
-                <li><a href="{{ link.href }}"><i class="icon-{{ link.icon }}"></i>{{ link.name }}</a></li>
+                <li>
+                    <a href="{{ link.href }}" {% if link.blank %} target="_blank" {% endif %}>
+                        <i class="icon-{{ link.icon }}"></i>{{ link.name }}
+                    </a>
+                </li>
             {% endfor %}
         </ul>
     </nav>

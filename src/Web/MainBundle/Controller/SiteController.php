@@ -1,6 +1,8 @@
 <?php
 namespace Web\MainBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -22,7 +24,7 @@ class SiteController extends Controller
 	/**
 	 * Carga la portada de la web
 	 *
-	 * Route("/", name="main_homepage")  /
+	 * @Route("/", name="index")
 	 * Template("MainBundle:Layout:index.html.twig")
 	 */
 	public function indexAction()
@@ -88,10 +90,10 @@ class SiteController extends Controller
 	/**
 	 * Carga y procesa el formulario de contacto
 	 *
-	 * Route("/site/contact/", name="contact_form")
+	 * @Route("/site/contact/", name="contact_form")
 	 * Tamplate("MainBundle:Static:contact.html.twig")
 	 */
-	public function contactAction()
+	public function contactAction(Request $request)
 	{
         $user = $this->getDoctrine()->getRepository('UserBundle:User')->findOneByUsernameWithSocialNetworks('enrique');
 
@@ -99,78 +101,78 @@ class SiteController extends Controller
             throw $this->createNotFoundException('Unable to find User post.');
         }
 
-		$request = $this->getRequest();
-
-		$mail = new ContactMail();
-
         // Para los email de la sección contacto vamos a crear un formulario in-situ
-		$form = $this->createFormBuilder($mail)
-			->add('name', 'text', array(
-					'label' => false,
-					'max_length' => '50',
-                    'attr' => array(
-                        'placeholder' => 'Nombre'
-                    )
-				)
-			)
-			->add('email', 'email', array(
-                    'label' => false,
-					'max_length' => '100',
-                    'attr' => array(
-                        'placeholder' => 'Tú dirección de eMail'
-                    )
-				)
-			)
-	        ->add('subject', 'text', array(
-	        		'label' => false,
-	        		'max_length' => '50',
-                    'attr' => array(
-                        'placeholder' => 'Asunto'
-                    )
-	        	)
-	        )
-			->add('body', 'textarea', array(
-					'label' => false,
-					'max_length' => '255',
-                    'attr' => array(
-                        'placeholder' => 'Mensaje',
-                        'rows' => '10'
-                    )
-	        	)
-	        )
-			->add('submit', 'submit', array(
-					'label' => 'Envía tú eMail',
-                    'attr' => array(
-                        'class' => 'but opc-2'
-                    )
+        $form = $this->createFormBuilder()
+            ->add('name', 'text', array(
+                'label' => false,
+                'max_length' => '50',
+                'attr' => array(
+                    'placeholder' => 'Nombre'
                 )
-	        )
-			->getForm();
+            ))
+            ->add('email', 'email', array(
+                'label' => false,
+                'max_length' => '100',
+                'attr' => array(
+                    'placeholder' => 'Tú dirección de eMail'
+                )
+            ))
+            ->add('subject', 'text', array(
+                'label' => false,
+                'max_length' => '50',
+                'attr' => array(
+                    'placeholder' => 'Asunto'
+                )
+            ))
+            ->add('body', 'textarea', array(
+                'label' => false,
+                'max_length' => '255',
+                'attr' => array(
+                    'placeholder' => 'Mensaje',
+                    'rows' => '10'
+                )
+            ))
+            ->add('submit', 'submit', array(
+                'label' => 'Envía tú eMail',
+                'attr' => array(
+                    'class' => 'but opc-2'
+                )
+            ))
+            ->getForm();
 
-		$form->handleRequest($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
-        	$message = \Swift_Message::newInstance()
-	        	->setSubject($mail->getSubject())
-	            ->setFrom($mail->getEmail())
-	            ->setTo($this->container->getParameter('emails.contact_email'))
-	        	->setBody($this->renderView('MainBundle:Static:contact_mail.txt.twig', array('mail' => $mail)), 'text/html');
+            $data = $form->getData();
 
-			$this->get('mailer')->send($message);
-        	
-        	$mail->setDate(new \DateTime());
+            $body = sprintf("Remitente: %s \n\n Mensaje:\n %s \n\n Navegador: %s \n IP: %s \n",
+                $data['email'],
+                htmlspecialchars($data['body']),
+                $request->server->get('HTTP_USER_AGENT'),
+                $request->server->get('REMOTE_ADDR')
+            );
 
-        	// Las siguientes lineas de código guardaran una copia en la base de datos, en caso de que hallan sido mapeadas
-        	// $em = $this->getDoctrine()->getManager();
- 		    // $em->persist($mail);
-  		    // $em->flush();
+            $message = \Swift_Message::newInstance()
+                ->setSubject($data['subject'].' <Contatctos: Web Personal>')
+                ->setFrom(array($data['email']))
+                ->setTo($this->container->getParameter('emails.contact_email'))
+                //->setTo('usuario@usuario.es')
+                //->setBody($this->renderView('MainBundle:Static:contact_mail.txt.twig', array('mail' => $data)), 'text/html');
+                ->setBody($body);
 
-			$this->get('session')->getflashbag()->add('notice', 'El mensage se ha enviado correctamente.');
+            $this->get('mailer')->send($message);
 
-  		    return $this->redirect($this->generateUrl('contact_form'));
+            $this->addFlash('notice', 'El mensaje se ha enviado correctamente.');
+
+            //ldd($message->getBody(), $message->getTo(), $message->getFrom());
+            return $this->render('MainBundle:Layout:contact.html.twig', array(
+                    'user' => $user,
+                    'form' => $form->createView()
+                )
+            );
         }
     	
-        return $this->render('MainBundle:Static:contact.html.twig', array(
+        return $this->render('MainBundle:Layout:contact.html.twig', array(
                 'user' => $user,
                 'form' => $form->createView()
             )

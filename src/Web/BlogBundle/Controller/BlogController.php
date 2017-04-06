@@ -2,6 +2,8 @@
 
 namespace Web\BlogBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Web\BlogBundle\Entity\Blog;
@@ -50,7 +52,7 @@ class BlogController extends Controller
      * Selecionamos un blog por su slug (título en minusculas y sin espacios) para luego mostrarlo
      *     a través de la plantilla show_blog
      * 
-     * Route("/{slug}/", name="blog_show_slug")
+     * @Route("/{slug}/", name="blog_show_slug")
      * Tamplate("BlogBundle:Blog:show_blog.html.twig", vars={"blog","comments"})
      *
      * @param string $slug título del blog a mostrar en minusculas y sin espacios
@@ -78,7 +80,7 @@ class BlogController extends Controller
     /**
      * Muestra una lista de los blogs más recientes ordenados por fecha
      *
-     * Route("/recent/", name="blog_recent")
+     * @Route("/", name="recent_blog")
      * Tamplate("BlogBundle:Blog:recent_blogs.html.twig", vars={"blog","comment"})
      */
     public function recentBlogsAction()

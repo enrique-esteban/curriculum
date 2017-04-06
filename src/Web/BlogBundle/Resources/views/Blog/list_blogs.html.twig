@@ -1,71 +1,146 @@
-{% extends 'BlogBundle:Blog:blog_frontend.html.twig' %}
+{% extends 'MainBundle:Layout:frontend.html.twig' %}
 
-{# Title
-===================================================================================================== #}
+{# comienzo bloque title #}
 {% block title %}
     {{ title }}
-{% endblock %}
-{# ====== Fin Title #}
+{% endblock %} {# fin bloque title #}
 
+{# comienzo bloque leftContent #}
+{% block leftContent %}
+<!--Header ················································································ -->
+    <header id="header">
+        {% import 'MainBundle:Layout:header.html.twig' as header %}
 
-{# Section
-===================================================================================================== #}
-{% block section %}
-    <!-- Cabecera: contiene el título del post
-    ================================================================================================= -->
-    <header>
-        <!-- Titulo
-        ····························································································· -->
-        <h1 id="headline">{{ title }}</h1>
-        <!-- ······ Fin Titulo -->
+        <!--Main header-->
+        <div class="main-header">
+            <!--Profile image-->
+            {{ header.profileImage(
+                    asset('images/blog/default_left.jpg'),
+                    'Página principal de los blogs'
+                ) 
+            }}
+            <!--Fin profile image-->
+            <!--Main navigation-->
+            {{ header.navMenu({
+                    0: { href: path('recent_blog'), icon: 'chat', name: 'Inicio', blank: 0 },
+                    1: { href: path('index'), icon: 'user', name: 'Curriculum', blank: 0 },
+                })
+            }}
+            <!--Fin main navigation -->
+        </div>
+        <!--Fin main header -->
     </header>
-    <!-- ====== Fin Cabecera -->
+    <!-- ······ Fin header -->
+{% endblock %} {# fin bloque leftContent #}
 
-     <!-- Articulo: Lista de blosg, con fecha, imagen, resumen, etc.
-    ================================================================================================= -->
-    <article id="recent-blogs">
-        {% for blog in blogs %}
-            <!-- Fecha del blog
-            ························································································· -->
-            <div class="date">
-                <time datetime="{{ blog.created | date('c') }}">{{ blog.created | formatted_date }}</time>
+{# comienzo bloque rightContent #}
+{% block rightContent %}
+    <section id="blog" class="bgWhite ofsInBottom">
+        <!--Blog -->
+        <div class="blog">
+            <!--Main title-->
+            <div class="main-title">
+                <h1>latest news</h1>
+                <div class="divider">
+                    <div class="zigzag large clearfix "  data-svg-drawing="yes" >
+                        <svg xml:space="preserve" viewBox="0 0 69.172 14.975" width="37" height="28" y="0px" x="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1">
+                            <path d="M1.357,12.26 10.807,2.81 20.328,12.332 29.781,2.879 39.223,12.321 48.754,2.79 58.286,12.321 67.815,2.793 "  style="stroke-dasharray: 93.9851, 93.9851; stroke-dashoffset: 0;"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>  
+            <!--End main title-->
+
+            <!--Content-->  
+            <div class="content">
+                <!--Block content-->    
+                <div class="block-content ">
+                    <!--Blogs-->
+                    <div class="blog">
+                        <!--Row-->  
+                        <div class="row">
+                            <!--All blog posts-->   
+                            <div class="block-posts ">
+                                <!--Block post-->
+                                <div class="block-post ">
+                                    <div class="col-md-12">
+                                        <div class="post-media margBSmall">
+                                            <img src="img/blog/1.jpg" alt=""/>
+                                        </div>
+                                        <div class="post-title">
+                                            <a href="blog_single.html">
+                                                <h1>Which design layout solution should you use ?</h1>
+                                            </a>
+                                            <span class="meta-date">23 Sep</span>
+                                        </div>
+                                        <ul class="post-meta">
+                                            <li>
+                                                <i class="icon-user"></i>
+                                                <span>Post by
+                                                    <a href="#">Benaissa Ghrib</a>
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <i class="icon-layout"></i>
+                                                <span>Tagged in
+                                                    <a href="#">Web Design</a>
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <i class="icon-comment"></i>
+                                                <span>Comments
+                                                    <a href="#">(2)</a>
+                                                </span>
+                                            </li>
+                                        </ul>
+                                        <hr>
+                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. </p>
+                                        <a href="blog_single.html" class="but brd">Read More</a>
+                                    </div>
+
+                                    <div class="clearfix"></div>
+                                        <!--Divider-->
+                                        <div class="divider-m tCenter margTSmall margBottom clearfix"> </div>
+                                        <div class="col-md-12">
+                                            <div class="zigzag medium clearfix "  data-svg-drawing="yes" >
+                                                <svg xml:space="preserve" viewBox="0 0 69.172 14.975" width="45" height="5" y="0px" x="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1">
+                                                    <path d="M1.357,12.26 10.807,2.81 20.328,12.332 29.781,2.879 39.223,12.321 48.754,2.79 58.286,12.321 67.815,2.793 "  style="stroke-dasharray: 93.9851, 93.9851; stroke-dashoffset: 0;"/>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End divider-->
+                                </div>
+                                <!--End block post-->
+                            </div>
+                            <!--End all block post-->
+
+                            <!--Button View All-->
+                            <div class="block-all tCenter margTSmall margBSmall">
+                                <a class="but  brd" href="blog.html">View all blog posts</a>
+                            </div>
+                            <!--End Butto View All-->
+                        </div>
+                        <!--End row-->
+                    </div>
+                    <!--End Blogs-->
+                </div>
+                <!--End block content-->
             </div>
-            <!-- ······ Fin Fecha -->
+            <!--End content-->
 
-            <!-- Subtitulo
-            ························································································· -->
-            <h2 id="subhead"><a href="{{ path('blog_show_slug', { 'slug': blog.slug }) }}">{{ blog.title }}</a></h2>
-            <!-- ······ Fin Subtitulo -->
-
-            <!-- Imagen del blog
-            ························································································· -->
-            <img src="{{ asset(['images/blog/', blog.image] | join) }}" />
-            <!-- ······ Fin Imagen del blog -->
-
-            <!-- Resumen del blog (con el autor y nº de comentarios)
-            ························································································· -->
-            <div>
-                <p>{{ blog.content(200) }}</p>
-                <p><a href="{{ path('blog_show_slug', { 'slug': blog.slug }) }}">Continua leyendo...</a></p>
+            <!--Final divider-->
+            <div class="button ofsInTop tCenter">
+                <div class="divider">
+                    <div class="zigzag large clearfix " data-svg-drawing="yes">
+                        <svg xml:space="preserve" viewBox="0 0 69.172 14.975" width="37" height="28" y="0px" x="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1">
+                            <path d="M1.357,12.26 10.807,2.81 20.328,12.332 29.781,2.879 39.223,12.321 48.754,2.79 58.286,12.321 67.815,2.793 " style="stroke-dasharray: 93.9851, 93.9851; stroke-dashoffset: 0;"></path>
+                        </svg>
+                    </div>
+                </div>
             </div>
-            <div>
-                <p>Author: <a href="{{ path('user_show_username', { 'userName': blog.author.userName }) }}">{{ blog.author }}</a></p>
-                <p>Comentarios: <span>{{ blog.comments | length }}</span></p>
-            </div>
-            <!-- ······ Fin Resumen del blog -->
-            <hr>
-        {% else %}
-            <p>No hay entradas recientes</p>
-    </article>
-    <!-- ====== Fin Articulo -->
-{% endfor %}
-{% endblock %}
-{# ====== Fin Section #}
-
-
-{# Aside
-===================================================================================================== #}
-{% block aside %}
-    {{ parent() }}
-{% endblock %}
-{# ====== Fin Aside #}
+            <!--End final divider-->
+        </div>
+        <!--End blog-->
+    </section>
+{% endblock %} {# fin bloque rightContent #}
