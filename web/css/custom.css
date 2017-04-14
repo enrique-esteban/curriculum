@@ -9,7 +9,8 @@
 ===============================================================================================
 1-Return to Top Arrow
 2-Ajuste de las etiquetas de habilidades profesionales
-3-Media queries
+3-Ajuste en las etiqueta post-meta a post-meta-donw
+-Media queries
 
 
 /* 1 - Return to Top Arrow */
@@ -76,6 +77,11 @@
 }
 /* Fin Ajuste de las etiquetas de habilidades profesionales */
 
+/* 3 - Ajuste en las etiqueta post-meta */
+.post-meta.down {
+    margin-top: -15px;
+}
+/* Fin Ajuste en las etiqueta post-meta */
 
 /* Media queries */
 

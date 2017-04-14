@@ -2,6 +2,7 @@
 
 namespace Web\UserBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 //  Clase utilizada para comprobar la autentificación de un usuario:
@@ -16,7 +17,8 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 
 /**
- * Controlador del usuario
+ * Controlador del usuario relacionado con la busqueda y presentación de la información
+ *    Nota: la lógica para la autentificación de usuarios está en AuthenticationController.php
  *
  * @author Enrique José Esteban Plaza <ense.esteban@gmail.com>
  */
@@ -25,7 +27,7 @@ class UserController extends Controller
     /**
      * Muestra un perfil de usuario, encontrado por su id
      *
-     * Route("/show/{id}/", name="user_show_id")
+     * @Route("/show/{id}/", name="show_user_by_id", requirements={"id": "\d+"})
      * Tamplate("serBundle:User:show.html.twig", vars={"id"})
      *
      * @param string $id Id de un usuario
@@ -57,7 +59,7 @@ class UserController extends Controller
     /**
      * Muestra un perfil de usuario
      *
-     * Route("/show/{userName}/", name="user_show")
+     * @Route("/show/{userName}/", name="show_user_by_username")
      * Tamplate("serBundle:User:show.html.twig", vars={"userName"})
      *
      * @param string $userName Nick del usuario logueado

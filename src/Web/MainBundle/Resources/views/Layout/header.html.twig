@@ -10,7 +10,7 @@
     </figure>
 {% endmacro %}
 
-{% macro navMenu(links, blank, search = 0) %}
+{% macro navMenu(links) %}
     <nav id="main-nav" class="main-nav clearfix tabbed not-printable">
         <ul>
             {% for link in links %}
@@ -22,6 +22,16 @@
             {% endfor %}
         </ul>
     </nav>
+{% endmacro %}
+
+{% macro navSearch() %}
+    <div class="search-header">
+        <form class="search-form" action="#">
+            <input type="text" value="Buscar" onblur="if(this.value == '') { this.value = 'Search'; }" onfocus="if(this.value == 'Search') { this.value = ''; }">
+            <input type="submit" value="" >
+            <i class="icon-search"></i>
+       </form>
+    </div>
 {% endmacro %}
 
 {% macro socialButtons(socialNetworks) %} 

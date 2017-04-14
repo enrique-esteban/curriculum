@@ -2,6 +2,7 @@
 
 namespace Web\UserBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 //  Clase utilizada para comprobar la autentificación de un usuario:
@@ -16,9 +17,9 @@ use Symfony\Component\Security\Core\SecurityContext;
 class AuthenticationController extends Controller
 {
     /**
-     * Controla el login de un usuario
+     * Controla el alta (login) de un usuario
      *
-     * Route("/login/", name="user_login")
+     * @Route("/login", name="user_login")
      * Tamplate("serBundle:User:login.html.twig")
      */
     public function loginAction()
@@ -40,6 +41,25 @@ class AuthenticationController extends Controller
     	));
     }
 
+    /**
+     * Controla el chequeo de un usuario dado de alta (logueado)
+     *
+     * @Route("/login_check", name="usuario_login_check")
+     */
+    public function loginCheckAction()
+    {
+        // el "login check" lo hace Symfony automáticamente
+    }
+
+    /**
+     * Controla la salída (logout) del usuario
+     *
+     * @Route("/logout", name="usuario_logout")
+     */
+    public function logoutAction()
+    {
+        // el logout lo hace Symfony automáticamente
+    }
 
     /**
      * Action que controla la caja de login de la barra superior de la web

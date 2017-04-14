@@ -50,7 +50,7 @@ class Blog
     protected $image;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Tag")
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="blogs")
      * @ORM\JoinTable(
      *      name="blogs_tags",
      *      joinColumns={@ORM\JoinColumn(name="blog_id", referencedColumnName="id")},
@@ -342,9 +342,8 @@ class Blog
      */
     public function setCreatedValue()
     {
-        if (null === $this->getImage()) $this->image = '/image/blog/default.jpg';
+        if (null === $this->getImage()) $this->image = '/images/blog/default_right.jpg';
 
         $this->created = new \DateTime('now');
-        $this->updated = new \DateTime('now'); // Hasta que se implemente la edición de blogs.
     }
 }

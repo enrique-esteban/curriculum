@@ -22,13 +22,15 @@
             <!--Fin profile image-->
             <!--Main navigation-->
             {{ header.navMenu({
-                    0: { href: path('recent_blog'), icon: 'chat', name: 'Inicio', blank: 0 },
+                    0: { href: path('recent_blogs'), icon: 'chat', name: 'Inicio', blank: 0 },
                     1: { href: path('index'), icon: 'user', name: 'Curriculum', blank: 0 },
                 })
             }}
             <!--Fin main navigation -->
         </div>
         <!--Fin main header -->
+
+        {{ header.navSearch() }}
     </header>
     <!-- ······ Fin header -->
 {% endblock %} {# fin bloque leftContent #}
@@ -40,7 +42,7 @@
         <div class="blog">
             <!--Main title-->
             <div class="main-title">
-                <h1>latest news</h1>
+                <h1>{{ title }}</h1>
                 <div class="divider">
                     <div class="zigzag large clearfix "  data-svg-drawing="yes" >
                         <svg xml:space="preserve" viewBox="0 0 69.172 14.975" width="37" height="28" y="0px" x="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1">
@@ -61,65 +63,102 @@
                         <div class="row">
                             <!--All blog posts-->   
                             <div class="block-posts ">
+                                {% for blog in blogs %}
                                 <!--Block post-->
-                                <div class="block-post ">
-                                    <div class="col-md-12">
-                                        <div class="post-media margBSmall">
-                                            <img src="img/blog/1.jpg" alt=""/>
-                                        </div>
-                                        <div class="post-title">
-                                            <a href="blog_single.html">
-                                                <h1>Which design layout solution should you use ?</h1>
-                                            </a>
-                                            <span class="meta-date">23 Sep</span>
-                                        </div>
-                                        <ul class="post-meta">
-                                            <li>
-                                                <i class="icon-user"></i>
-                                                <span>Post by
-                                                    <a href="#">Benaissa Ghrib</a>
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <i class="icon-layout"></i>
-                                                <span>Tagged in
-                                                    <a href="#">Web Design</a>
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <i class="icon-comment"></i>
-                                                <span>Comments
-                                                    <a href="#">(2)</a>
-                                                </span>
-                                            </li>
-                                        </ul>
-                                        <hr>
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. </p>
-                                        <a href="blog_single.html" class="but brd">Read More</a>
-                                    </div>
-
-                                    <div class="clearfix"></div>
-                                        <!--Divider-->
-                                        <div class="divider-m tCenter margTSmall margBottom clearfix"> </div>
+                                    <div class="block-post ">
                                         <div class="col-md-12">
-                                            <div class="zigzag medium clearfix "  data-svg-drawing="yes" >
-                                                <svg xml:space="preserve" viewBox="0 0 69.172 14.975" width="45" height="5" y="0px" x="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1">
-                                                    <path d="M1.357,12.26 10.807,2.81 20.328,12.332 29.781,2.879 39.223,12.321 48.754,2.79 58.286,12.321 67.815,2.793 "  style="stroke-dasharray: 93.9851, 93.9851; stroke-dashoffset: 0;"/>
-                                                </svg>
+                                            <div class="post-media margBSmall">
+                                                <img src="{{ asset(blog.image) }}" alt=""/>
+                                            </div>
+                                            <div class="post-title">
+                                                <a href="{{ path('show_blog_by_slug', { 'slug': blog.slug }) }}">
+                                                    <h1>{{ blog.title }}</h1>
+                                                </a>
+                                                <span class="meta-date">{{ blog.updated | formattedDate }}</span>
+                                            </div>
+                                            <ul class="post-meta">
+                                                <li>
+                                                    <i class="icon-user"></i>
+                                                    <span>Creado por
+                                                        <a href="{{ path('show_user_by_username', { 'userName': blog.author.userName }) }}">{{ blog.author.username }}</a>
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <i class="icon-comment"></i>
+                                                    <span>Comentarios
+                                                        <span class="comment">({{ blog.comments | length }})</span>
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                            <br>
+                                            <ul class="post-meta down">
+                                                <li>
+                                                    <i class="icon-layout"></i>
+                                                    <span>Etiquetas:
+                                                        {% for tag in blog.tags %}
+                                                            <a href="#">{{ tag.name }}</a>
+                                                        {% endfor %}
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                            <hr>
+                                            <p>{{ blog.content(500) }}</p>
+                                            <a href="{{ path('show_blog_by_slug', { 'slug': blog.slug }) }}" class="but brd">Continuar leyendo</a>
+                                        </div>
+
+                                        <div class="clearfix"></div>
+                                            <!--Divider-->
+                                            <div class="divider-m tCenter margTSmall margBottom clearfix"> </div>
+                                            <div class="col-md-12">
+                                                <div class="zigzag medium clearfix "  data-svg-drawing="yes" >
+                                                    <svg xml:space="preserve" viewBox="0 0 69.172 14.975" width="45" height="5" y="0px" x="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1">
+                                                        <path d="M1.357,12.26 10.807,2.81 20.328,12.332 29.781,2.879 39.223,12.321 48.754,2.79 58.286,12.321 67.815,2.793 "  style="stroke-dasharray: 93.9851, 93.9851; stroke-dashoffset: 0;"/>
+                                                    </svg>
+                                                </div>
                                             </div>
                                         </div>
+                                        <!--End divider-->
                                     </div>
-                                    <!--End divider-->
-                                </div>
-                                <!--End block post-->
+                                    <!--End block post-->
+                                {% endfor %}
                             </div>
                             <!--End all block post-->
 
-                            <!--Button View All-->
-                            <div class="block-all tCenter margTSmall margBSmall">
-                                <a class="but  brd" href="blog.html">View all blog posts</a>
-                            </div>
-                            <!--End Butto View All-->
+                            {% if paginator == true %}
+                                <!--Paginator-->
+                                <div class="block pagination tCenter margTSmall margBSmall">
+                                    <ul>
+                                        {% if currentPage > 1 %}
+                                            <li class="prev">
+                                                <a href="{{ path('all_blogs', { 'page': currentPage - 1 })}}">
+                                                    <i class="icon-left-open-mini"></i>
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                        {% for i in 1..pageCount %}
+                                            <li>
+                                                <a href="{{ path('all_blogs', { 'page': i } ) }}" {% if i == currentPage %} class="selected"{% endif %}>
+                                                    {{ i }}
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                        {% if currentPage < pageCount %}
+                                            <li class="next">
+                                                <a href="{{ path('all_blogs', { 'page': currentPage + 1 })}}">
+                                                    <i class="icon-right-open-mini"></i>
+                                                </a>
+                                            </li>
+                                        {%  endif %}
+                                    </ul>
+                                </div> 
+                                <!--End paginator-->
+                            {% else %}
+                                <!--Button View All-->
+                                <div class="block-all tCenter margTSmall margBSmall">
+                                    <a class="but  brd" href="{{ path('all_blogs', { page: 1 }) }}">Ver todos los blogs</a>
+                                </div>
+                                <!--End Butto View All-->
+                            {% endif %}
                         </div>
                         <!--End row-->
                     </div>
@@ -128,18 +167,6 @@
                 <!--End block content-->
             </div>
             <!--End content-->
-
-            <!--Final divider-->
-            <div class="button ofsInTop tCenter">
-                <div class="divider">
-                    <div class="zigzag large clearfix " data-svg-drawing="yes">
-                        <svg xml:space="preserve" viewBox="0 0 69.172 14.975" width="37" height="28" y="0px" x="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1">
-                            <path d="M1.357,12.26 10.807,2.81 20.328,12.332 29.781,2.879 39.223,12.321 48.754,2.79 58.286,12.321 67.815,2.793 " style="stroke-dasharray: 93.9851, 93.9851; stroke-dashoffset: 0;"></path>
-                        </svg>
-                    </div>
-                </div>
-            </div>
-            <!--End final divider-->
         </div>
         <!--End blog-->
     </section>

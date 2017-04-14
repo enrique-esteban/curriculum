@@ -29,6 +29,10 @@ class LoadBlogData extends AbstractFixture implements OrderedFixtureInterface
             $blog->setContent('Lorem ipsum dolor sit amet, consectetur adipiscing eletra electrify denim vel ports.\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ut velocity magna. Etiam vehicula nunc non leo hendrerit commodo. Vestibulum vulputate mauris eget erat congue dapibus imperdiet justo scelerisque. Nulla consectetur tempus nisl vitae viverra. Cras el mauris eget erat congue dapibus imperdiet justo scelerisque. Nulla consectetur tempus nisl vitae viverra. Cras elementum molestie vestibulum. Morbi id quam nisl. Praesent hendrerit, orci sed elementum lobortis, justo mauris lacinia libero, non facilisis purus ipsum non mi. Aliquam sollicitudin, augue id vestibulum iaculis, sem lectus convallis nunc, vel scelerisque lorem tortor ac nunc. Donec pharetra eleifend enim vel porta.');
             $blog->setAuthor($this->getReference('user'.mt_rand(1,5)));
             
+            // Generamos una fecha de actualización aleatoria
+            $date = mt_rand(1,28).'-'.mt_rand(1,12).'-'.mt_rand(2010,2017);
+            $blog->setUpdated(new \DateTime($date));
+
             // A cada blog se le asignará 5 tags aleatorios, como el nombre de los tags corresponde
             //    con el patrón tag[1-10], para ello obtenemos 5 núrmeros aleatorios, distintos,
             //    entre 1 y 10

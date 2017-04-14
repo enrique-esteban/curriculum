@@ -37,7 +37,7 @@
                 $formattedDate = "Hace $passTime horas.";
             }
             else { // Ha trascurrido al menos un día
-                $formattedDate = $date->format("D, d M, Y");
+                $formattedDate = $date->format("d-m-Y");
             }
 
             return $formattedDate;

@@ -3,6 +3,7 @@
 namespace Web\BlogBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * Clase repositorio para la entidad Blog
@@ -16,24 +17,26 @@ class BlogRepository extends EntityRepository
      * $limit, en el caso de que no estubiera definida $limit o su valor es igual o menor que cero se envia todos los
      * blogs encotrados.
      *
-     * @param integer $limit
+     * @param integer $limit limíte de busquedas
+     * @param integer $offset número de la fila desde la que empezar a contar  
      * @return Blog
      */
-    public function findLatestBlogs($limit = null)
+    public function findOrderedBlogs($limit = 4, $offset = 0)
     {
         $em = $this->getEntityManager();
 
         $query = $em->createQuery(
-            'SELECT b
+            'SELECT b, c, t
             FROM BlogBundle:Blog b
-            ORDER BY b.created DESC'
+            LEFT JOIN b.comments c
+            LEFT JOIN b.tags t
+            ORDER BY b.updated DESC'
         );
 
-        if (!is_null($limit) && $limit > 0) {
-            $query->setMaxResults($limit);
-        }
+        $query->setFirstResult($offset)->setMaxResults($limit);
+        $paginator = new Paginator($query, $fetchJoinCollection = true);
 
-        return $query->getResult();
+        return $paginator;
     }
 
     /**
