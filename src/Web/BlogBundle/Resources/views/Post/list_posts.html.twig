@@ -22,7 +22,7 @@
             <!--Fin profile image-->
             <!--Main navigation-->
             {{ header.navMenu({
-                    0: { href: path('recent_blogs'), icon: 'chat', name: 'Inicio', blank: 0 },
+                    0: { href: path('recent_posts'), icon: 'chat', name: 'Inicio', blank: 0 },
                     1: { href: path('index'), icon: 'user', name: 'Curriculum', blank: 0 },
                 })
             }}
@@ -63,30 +63,30 @@
                         <div class="row">
                             <!--All blog posts-->   
                             <div class="block-posts ">
-                                {% for blog in blogs %}
+                                {% for post in posts %}
                                 <!--Block post-->
                                     <div class="block-post ">
                                         <div class="col-md-12">
                                             <div class="post-media margBSmall">
-                                                <img src="{{ asset(blog.image) }}" alt=""/>
+                                                <img src="{{ asset(post.image) }}" alt=""/>
                                             </div>
                                             <div class="post-title">
-                                                <a href="{{ path('show_blog_by_slug', { 'slug': blog.slug }) }}">
-                                                    <h1>{{ blog.title }}</h1>
+                                                <a href="#">
+                                                    <h1>{{ post.title }}</h1>
                                                 </a>
-                                                <span class="meta-date">{{ blog.updated | formattedDate }}</span>
+                                                <span class="meta-date">{{ post.updated | formattedDate }}</span>
                                             </div>
                                             <ul class="post-meta">
                                                 <li>
                                                     <i class="icon-user"></i>
                                                     <span>Creado por
-                                                        <a href="{{ path('show_user_by_username', { 'userName': blog.author.userName }) }}">{{ blog.author.username }}</a>
+                                                        <a href="{{ path('show_user_by_username', { 'userName': post.author.userName }) }}">{{ post.author.username }}</a>
                                                     </span>
                                                 </li>
                                                 <li>
                                                     <i class="icon-comment"></i>
                                                     <span>Comentarios
-                                                        <span class="comment">({{ blog.comments | length }})</span>
+                                                        <span class="comment">({{ post.comments | length }})</span>
                                                     </span>
                                                 </li>
                                             </ul>
@@ -95,15 +95,20 @@
                                                 <li>
                                                     <i class="icon-layout"></i>
                                                     <span>Etiquetas:
-                                                        {% for tag in blog.tags %}
-                                                            <a href="#">{{ tag.name }}</a>
+                                                        {% for tag in post.tags %}
+                                                            <a href="{{ path('list_posts_by_tag', {
+                                                                'tagSlug': tag.slug,
+                                                                'page': 1
+                                                            }) }}">
+                                                                {{ tag.name }}
+                                                            </a>
                                                         {% endfor %}
                                                     </span>
                                                 </li>
                                             </ul>
                                             <hr>
-                                            <p>{{ blog.content(500) }}</p>
-                                            <a href="{{ path('show_blog_by_slug', { 'slug': blog.slug }) }}" class="but brd">Continuar leyendo</a>
+                                            <p>{{ post.content(500) }}</p>
+                                            <a href="#" class="but brd">Continuar leyendo</a>
                                         </div>
 
                                         <div class="clearfix"></div>
@@ -130,21 +135,21 @@
                                     <ul>
                                         {% if currentPage > 1 %}
                                             <li class="prev">
-                                                <a href="{{ path('all_blogs', { 'page': currentPage - 1 })}}">
+                                                <a href="{{ path('list_all_posts', { 'page': currentPage - 1 })}}">
                                                     <i class="icon-left-open-mini"></i>
                                                 </a>
                                             </li>
                                         {% endif %}
                                         {% for i in 1..pageCount %}
                                             <li>
-                                                <a href="{{ path('all_blogs', { 'page': i } ) }}" {% if i == currentPage %} class="selected"{% endif %}>
+                                                <a href="{{ path('list_all_posts', { 'page': i } ) }}" {% if i == currentPage %} class="selected"{% endif %}>
                                                     {{ i }}
                                                 </a>
                                             </li>
                                         {% endfor %}
                                         {% if currentPage < pageCount %}
                                             <li class="next">
-                                                <a href="{{ path('all_blogs', { 'page': currentPage + 1 })}}">
+                                                <a href="{{ path('list_all_posts', { 'page': currentPage + 1 })}}">
                                                     <i class="icon-right-open-mini"></i>
                                                 </a>
                                             </li>
@@ -155,7 +160,7 @@
                             {% else %}
                                 <!--Button View All-->
                                 <div class="block-all tCenter margTSmall margBSmall">
-                                    <a class="but  brd" href="{{ path('all_blogs', { page: 1 }) }}">Ver todos los blogs</a>
+                                    <a class="but  brd" href="{{ path('list_all_posts', { page: 1 }) }}">Ver todos los blogs</a>
                                 </div>
                                 <!--End Butto View All-->
                             {% endif %}

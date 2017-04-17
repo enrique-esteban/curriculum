@@ -141,9 +141,9 @@ class User implements AdvancedUserInterface
     private $admin;
 
     /**
-     * @ORM\OneToMany(targetEntity="\Web\BlogBundle\Entity\Blog", mappedBy="author")
+     * @ORM\OneToMany(targetEntity="\Web\BlogBundle\Entity\Post", mappedBy="author")
      */
-    protected $blogs;
+    protected $post;
 
     /**
      * @ORM\OneToMany(targetEntity="\Web\BlogBundle\Entity\Comment", mappedBy="author")
@@ -165,7 +165,7 @@ class User implements AdvancedUserInterface
      */
     public function __construct()
     {
-        $this->blogs = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
         $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
         $this->curriculums = new \Doctrine\Common\Collections\ArrayCollection();
         $this->socialNetworks = new \Doctrine\Common\Collections\ArrayCollection();
@@ -538,37 +538,37 @@ class User implements AdvancedUserInterface
     }
 
     /**
-     * Add blog
+     * Add post
      *
-     * @param \Web\BlogBundle\Entity\Blog $blog
+     * @param \Web\BlogBundle\Entity\Post $post
      *
      * @return User
      */
-    public function addBlog(\Web\BlogBundle\Entity\Blog $blog)
+    public function addBlog(\Web\BlogBundle\Entity\Post $post)
     {
-        $this->blogs[] = $blog;
+        $this->posts[] = $post;
 
         return $this;
     }
 
     /**
-     * Remove blog
+     * Remove post
      *
-     * @param \Web\BlogBundle\Entity\Blog $blog
+     * @param \Web\BlogBundle\Entity\Post $post
      */
-    public function removeBlog(\Web\BlogBundle\Entity\Blog $blog)
+    public function removeBlog(\Web\BlogBundle\Entity\Post $post)
     {
-        $this->blogs->removeElement($blog);
+        $this->posts->removeElement($post);
     }
 
     /**
-     * Get blogs
+     * Get posts
      *
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getBlogs()
     {
-        return $this->blogs;
+        return $this->posts;
     }
 
     /**

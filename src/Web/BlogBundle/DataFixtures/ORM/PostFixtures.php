@@ -5,15 +5,15 @@ namespace Web\BlogBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Web\BlogBundle\Entity\Blog;
+use Web\BlogBundle\Entity\Post;
 
 
 /**
- * Datos de prueba para la entidad Blog
+ * Datos de prueba para la entidad Post
  *
  * @author Enrique José Esteban Plaza <ense.esteban@gmail.com>  
  */
-class LoadBlogData extends AbstractFixture implements OrderedFixtureInterface
+class LoadPostData extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
      * {@inheritDoc}
@@ -21,19 +21,19 @@ class LoadBlogData extends AbstractFixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager)
     {
         for ($i=1; $i <= 5; $i++) { 
-            $blog = new Blog();
+            $post = new Post();
 
             // Se establece los valores (para las fechas se toma los valores por defecto, ver contructor de la entidad)
-            $blog->setTitle('Example'.$i);
-            $blog->setSlug('example'.$i);
-            $blog->setContent('Lorem ipsum dolor sit amet, consectetur adipiscing eletra electrify denim vel ports.\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ut velocity magna. Etiam vehicula nunc non leo hendrerit commodo. Vestibulum vulputate mauris eget erat congue dapibus imperdiet justo scelerisque. Nulla consectetur tempus nisl vitae viverra. Cras el mauris eget erat congue dapibus imperdiet justo scelerisque. Nulla consectetur tempus nisl vitae viverra. Cras elementum molestie vestibulum. Morbi id quam nisl. Praesent hendrerit, orci sed elementum lobortis, justo mauris lacinia libero, non facilisis purus ipsum non mi. Aliquam sollicitudin, augue id vestibulum iaculis, sem lectus convallis nunc, vel scelerisque lorem tortor ac nunc. Donec pharetra eleifend enim vel porta.');
-            $blog->setAuthor($this->getReference('user'.mt_rand(1,5)));
+            $post->setTitle('Example'.$i);
+            $post->setSlug('example'.$i);
+            $post->setContent('Lorem ipsum dolor sit amet, consectetur adipiscing eletra electrify denim vel ports.\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ut velocity magna. Etiam vehicula nunc non leo hendrerit commodo. Vestibulum vulputate mauris eget erat congue dapibus imperdiet justo scelerisque. Nulla consectetur tempus nisl vitae viverra. Cras el mauris eget erat congue dapibus imperdiet justo scelerisque. Nulla consectetur tempus nisl vitae viverra. Cras elementum molestie vestibulum. Morbi id quam nisl. Praesent hendrerit, orci sed elementum lobortis, justo mauris lacinia libero, non facilisis purus ipsum non mi. Aliquam sollicitudin, augue id vestibulum iaculis, sem lectus convallis nunc, vel scelerisque lorem tortor ac nunc. Donec pharetra eleifend enim vel porta.');
+            $post->setAuthor($this->getReference('user'.mt_rand(1,5)));
             
             // Generamos una fecha de actualización aleatoria
             $date = mt_rand(1,28).'-'.mt_rand(1,12).'-'.mt_rand(2010,2017);
-            $blog->setUpdated(new \DateTime($date));
+            $post->setUpdated(new \DateTime($date));
 
-            // A cada blog se le asignará 5 tags aleatorios, como el nombre de los tags corresponde
+            // A cada post se le asignará 5 tags aleatorios, como el nombre de los tags corresponde
             //    con el patrón tag[1-10], para ello obtenemos 5 núrmeros aleatorios, distintos,
             //    entre 1 y 10
             $tag_numbers = Array();
@@ -51,12 +51,12 @@ class LoadBlogData extends AbstractFixture implements OrderedFixtureInterface
             }
 
             foreach ($tag_numbers as $tag_number) { // Finalmente se guardan los tags
-                $blog->addTag($this->getReference('tag'.$tag_number));
+                $post->addTag($this->getReference('tag'.$tag_number));
             }
 
-            $manager->persist($blog);
+            $manager->persist($post);
 
-            $this->addReference('blog'.$i,$blog);
+            $this->addReference('post'.$i,$post);
         }
 
         $manager->flush();

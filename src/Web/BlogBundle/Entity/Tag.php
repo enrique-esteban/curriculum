@@ -37,16 +37,16 @@ class Tag
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Blog", mappedBy="tags")
+     * @ORM\ManyToMany(targetEntity="Post", mappedBy="tags")
      */
-    protected $blogs;
+    protected $posts;
     
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->blogs = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -106,36 +106,36 @@ class Tag
     }
 
     /**
-     * Add blogs
+     * Add post
      *
-     * @param \Web\BlogBundle\Entity\Blog $blogs
+     * @param \Web\BlogBundle\Entity\Post $posts
      * @return Tag
      */
-    public function addBlog(\Web\BlogBundle\Entity\Blog $blogs)
+    public function addPost(\Web\BlogBundle\Entity\Post $post)
     {
-        $this->blogs[] = $blogs;
+        $this->posts[] = $post;
 
         return $this;
     }
 
     /**
-     * Remove blogs
+     * Remove post
      *
-     * @param \Web\BlogBundle\Entity\Blog $blogs
+     * @param \Web\BlogBundle\Entity\Post $posts
      */
-    public function removeBlog(\Web\BlogBundle\Entity\Blog $blogs)
+    public function removePost(\Web\BlogBundle\Entity\Post $post)
     {
-        $this->blogs->removeElement($blogs);
+        $this->posts->removeElement($post);
     }
 
     /**
-     * Get blogs
+     * Get post
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getBlogs()
+    public function getPost()
     {
-        return $this->blogs;
+        return $this->posts;
     }
 
     /**

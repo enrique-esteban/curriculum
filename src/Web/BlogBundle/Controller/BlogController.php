@@ -6,7 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use Web\BlogBundle\Entity\Blog;
+use Web\BlogBundle\Entity\Post;
 use Web\BlogBundle\Entity\Comment;
 use Web\UserBundle\Entity\User;
 
@@ -24,8 +24,8 @@ class BlogController extends Controller
     /**
      * Seleciona un blog por su id para luego mostrarlo a través de la plantilla show_blog
      * 
-     * Route("/{id}/", name="show_blog_by_id", requirements={"id": "\d+"})
-     * Tamplate("BlogBundle:Blog:show_blog.html.twig", vars={"blog","comment"})
+     * Route("/post/{id}/", name="show_post_by_id", requirements={"id": "\d+"})
+     * Tamplate("BlogBundle:Post:show_blog.html.twig", vars={"blog","comment"})
      *
      * @param integer $id Identificador del blog a mostrar
      */
@@ -33,16 +33,16 @@ class BlogController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $blog = $em->getRepository('BlogBundle:Blog')->find($id);
+        $post = $em->getRepository('BlogBundle:Post')->find($id);
 
-        if (!$blog) {
-            throw $this->createNotFoundException('Unable to find Blog post.');
+        if (!$post) {
+            throw $this->createNotFoundException('Unable to find the blog post with id: '.$is.'.');
         }
 
-        $comments = $em->getRepository('BlogBundle:Comment')->findCommentsByBlogSlug($blog->getSlug());
+        $comments = $em->getRepository('BlogBundle:Comment')->findCommentsByBlogSlug($post->getSlug());
 
-        return $this->render('BlogBundle:Blog:show_blog.html.twig', array(
-                'blog' => $blog,
+        return $this->render('BlogBundle:Post:show_blog.html.twig', array(
+                'post' => $post,
                 'comments' => $comments,
             )
         );
@@ -51,17 +51,17 @@ class BlogController extends Controller
     /**
      * Muestra una lista de los tres blogs más recientes ordenados por fecha descendente
      *
-     * @Route("/recent/", name="recent_blogs")
-     * Tamplate("BlogBundle:Blog:list_blogs.html.twig", vars={"blog","title", "paginator"})
+     * @Route("/recent", name="recent_posts")
+     * Tamplate("BlogBundle:Post:list_posts.html.twig", vars={"blog", "title", "paginator"})
      */
     public function listRecentAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $blogs = $em->getRepository('BlogBundle:Blog')->findOrderedBlogs(3);
+        $posts = $em->getRepository('BlogBundle:Post')->findOrderedPosts(3);
 
-        return $this->render('BlogBundle:Blog:list_blogs.html.twig', array(
-                'blogs' => $blogs,
+        return $this->render('BlogBundle:Post:list_posts.html.twig', array(
+                'posts' => $posts,
                 'title' => 'Últimas novedades',
                 'paginator' => false,
             )
@@ -72,26 +72,26 @@ class BlogController extends Controller
     /**
      * Muestra una lista de todos los blogs ordenados por fecha descendente
      *
-     * @Route("/all/page/{page}", name="all_blogs", requirements={"page": "\d+"})
-     * Tamplate("BlogBundle:Blog:list_blogs.html.twig", vars={"blog","title", "paginator"})
+     * @Route("/all/page/{page}", name="list_all_posts", requirements={"page": "\d+"})
+     * Tamplate("BlogBundle:Post:list_posts.html.twig", vars={"blog","title", "paginator", "pageCount", "currentPage"})
      *
      * @param integer $page número de la página a visualizar 
      */
     public function listAllAction($page)
     {
-        $pageSize = 3; // Número de post vizualizados por página
+        $pageSize = 4; // Número de post vizualizados por página
         $firstPost = ($page - 1) * $pageSize; // Primer post que se vizualizará en cada página
 
         $em = $this->getDoctrine()->getManager();
 
-        $blogs = $em->getRepository('BlogBundle:Blog')->findOrderedBlogs($pageSize, $firstPost);
+        $posts = $em->getRepository('BlogBundle:Post')->findOrderedPosts($pageSize, $firstPost);
 
         // Obtenemos el número total de páginas
-        $pageCount = ceil(count($blogs) / $pageSize);
+        $pageCount = ceil(count($posts) / $pageSize);
 
-        return $this->render('BlogBundle:Blog:list_blogs.html.twig', array(
-                'blogs' => $blogs,
-                'title' => 'Lista de todos los blogs',
+        return $this->render('BlogBundle:Post:list_posts.html.twig', array(
+                'posts' => $posts,
+                'title' => 'Lista de todos los post',
                 'paginator' => true,
                 'pageCount' => $pageCount,
                 'currentPage' => $page,
@@ -99,54 +99,33 @@ class BlogController extends Controller
         );
     }
 
-    /**
-     * Busca todos los blogs que coincidan con el slug dado
-     * 
-     * @Route("/{slug}/", name="show_blog_by_slug")
-     * Tamplate("BlogBundle:Blog:show_blog.html.twig", vars={"blog","comments"})
-     *
-     * @param string $slug título del blog a mostrar en minusculas y sin espacios
-     */
-
-    public function showForSlugAction($slug)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $blog = $em->getRepository('BlogBundle:Blog')->findOneBySlug($slug);
-
-        if (!$blog) {
-            throw $this->createNotFoundException('Unable to find Blog post.');
-        }
-
-        $comments = $em->getRepository('BlogBundle:Comment')->findCommentsByBlogSlug($blog->getSlug());
-
-        return $this->render('BlogBundle:Blog:show_blog.html.twig', array(
-               'blog' => $blog,
-                'comments' => $comments,
-            )
-        );
-    }
-
-    /**
+     /**
      * Busca todos los blogs que coincidan con una etiqueta (tag) concreta
      *
-     * Route("/list/tag/{slug}/", name="blog_list_tag_slug")
-     * Tamplate("BlogBundle:Blog:list_blogs.html.twig", vars={"blogs","title"})
+     * @Route("/tag/{tagSlug}/page/{page}", name="list_posts_by_tag", requirements={"page": "\d+"})
+     * Tamplate("BlogBundle:Post:list_posts.html.twig", vars={"blog","title", "paginator", "pageCount", "currentPage"})
      *
-     * @param string $slug slug de una etiqueta, utilizada para la busqueda de los blogs
+     * @param string $tagSlug slug de una etiqueta, utilizada para la busqueda de los blogs
+     * @param integer $page número de la página a visualizar
      */
-    public function listForTagAction($slug)
+    public function listByTagAction($tagSlug, $page)
     {
+        $pageSize = 4; // Número de post vizualizados por página
+        $firstPost = ($page - 1) * $pageSize; // Primer post que se vizualizará en cada página
+
         $em = $this->getDoctrine()->getManager();
 
-        $tag = $em->getRepository('BlogBundle:Tag')->findOneBySlug($slug);
+        $posts = $em->getRepository('BlogBundle:Post')->findByTag($tagSlug, $pageSize, $firstPost);
 
-        //$blogs = $tag->getBlogs();
-        $blogs = $em->getRepository('BlogBundle:Blog')->findForATag($slug);
+        // Obtenemos el número total de páginas
+        $pageCount = ceil(count($posts) / $pageSize);
 
-        return $this->render('BlogBundle:Blog:list_blogs.html.twig', array(
-                'blogs' => $blogs,
-                'title' => 'Blogs con la etiqueta '.$tag->getName()
+        return $this->render('BlogBundle:Post:list_posts.html.twig', array(
+                'posts' => $posts,
+                'title' => 'Post con la etiqueta '.$tagSlug,
+                'paginator' => true,
+                'pageCount' => $pageCount,
+                'currentPage' => $page,
             )
         );
     }
@@ -210,9 +189,9 @@ class BlogController extends Controller
             return $this->redirect($this->generateUrl('user_signup'));
         }
 
-        return $this->render('BlogBundle:Blog:blog_signup.html.twig', array('form' => $form->createView()));
+        return $this->render('BlogBundle:Post:blog_signup.html.twig', array('form' => $form->createView()));
         */
-        return $this->render('BlogBundle:Blog:blog_signup.html.twig');
+        return $this->render('BlogBundle:Post:blog_signup.html.twig');
 
     }
 }

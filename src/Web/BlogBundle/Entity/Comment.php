@@ -5,7 +5,7 @@ namespace Web\BlogBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Entidad que representa los comentarios asociados a cada blog
+ * Entidad que representa los comentarios asociados a cada post
  * 
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Web\BlogBundle\Entity\CommentRepository")
@@ -37,10 +37,10 @@ class Comment
     protected $approved;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Blog", inversedBy="comments")
-     * @ORM\JoinColumn(name="blog_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Web\BlogBundle\Entity\Post", inversedBy="comments")
+     * @ORM\JoinColumn(name="post_id", referencedColumnName="id")
      */
-    protected $blog;
+    protected $post;
 
     /**
      * @ORM\Column(type="datetime")
@@ -178,26 +178,26 @@ class Comment
     }
 
     /**
-     * Set blog
+     * Set post
      *
-     * @param \Web\BlogBundle\Entity\Blog $blog
+     * @param \Web\BlogBundle\Entity\Post $post
      * @return Comment
      */
-    public function setBlog(\Web\BlogBundle\Entity\Blog $blog = null)
+    public function setPost(\Web\BlogBundle\Entity\Post $post = null)
     {
-        $this->blog = $blog;
+        $this->post = $post;
 
         return $this;
     }
 
     /**
-     * Get blog
+     * Get post
      *
-     * @return \Web\BlogBundle\Entity\Blog 
+     * @return \Web\BlogBundle\Entity\Post 
      */
-    public function getBlog()
+    public function getPost()
     {
-        return $this->blog;
+        return $this->post;
     }
 
     // Ciclo de vida (HasLifecycleCallbacks):
@@ -212,7 +212,7 @@ class Comment
         $this->created = new \DateTime('now');
         $this->updated = new \DateTime('now');
 
-        // Por defecto, y dado que es una aplicación de preubas, todos los comentarios se consideran aprovados.
+        // Por defecto, y dado que es una aplicación de pruebas, todos los comentarios se consideran aprovados.
         $this->approved = true;
     }
 }

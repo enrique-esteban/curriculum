@@ -8,13 +8,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * Blog
+ * Entidad que representa los Post del Blog
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Web\BlogBundle\Entity\BlogRepository")
+ * @ORM\Entity(repositoryClass="Web\BlogBundle\Entity\PostRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class Blog
+class Post
 {
     /**
      * @ORM\Id
@@ -34,7 +34,7 @@ class Blog
     protected $slug;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Web\UserBundle\Entity\User", inversedBy="blogs")
+     * @ORM\ManyToOne(targetEntity="Web\UserBundle\Entity\User", inversedBy="posts")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $author;
@@ -52,15 +52,15 @@ class Blog
     /**
      * @ORM\ManyToMany(targetEntity="Tag", inversedBy="blogs")
      * @ORM\JoinTable(
-     *      name="blogs_tags",
-     *      joinColumns={@ORM\JoinColumn(name="blog_id", referencedColumnName="id")},
+     *      name="Post_Tag",
+     *      joinColumns={@ORM\JoinColumn(name="post_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="tag_id", referencedColumnName="id")}
      * )
      */
     protected $tags;
 
     /**
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="blog")
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="post")
      */
     protected $comments;
 
@@ -242,9 +242,9 @@ class Blog
      * @param \Web\BlogBundle\Entity\Tag $tags
      * @return Blog
      */
-    public function addTag(\Web\BlogBundle\Entity\Tag $tags)
+    public function addTag(\Web\BlogBundle\Entity\Tag $tag)
     {
-        $this->tags[] = $tags;
+        $this->tags[] = $tag;
     
         return $this;
     }
@@ -254,9 +254,9 @@ class Blog
      *
      * @param \Web\BlogBundle\Entity\Tag $tags
      */
-    public function removeTag(\Web\BlogBundle\Entity\Tag $tags)
+    public function removeTag(\Web\BlogBundle\Entity\Tag $tag)
     {
-        $this->tags->removeElement($tags);
+        $this->tags->removeElement($tag);
     }
 
     /**
