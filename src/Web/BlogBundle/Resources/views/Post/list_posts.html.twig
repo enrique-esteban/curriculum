@@ -71,7 +71,7 @@
                                                 <img src="{{ asset(post.image) }}" alt=""/>
                                             </div>
                                             <div class="post-title">
-                                                <a href="#">
+                                                <a href="{{ path('show_post_by_slug', { 'query': post.slug }) }}">
                                                     <h1>{{ post.title }}</h1>
                                                 </a>
                                                 <span class="meta-date">{{ post.updated | formattedDate }}</span>
@@ -97,7 +97,7 @@
                                                     <span>Etiquetas:
                                                         {% for tag in post.tags %}
                                                             <a href="{{ path('list_posts_by_tag', {
-                                                                'tagSlug': tag.slug,
+                                                                'query': tag.slug,
                                                                 'page': 1
                                                             }) }}">
                                                                 {{ tag.name }}
@@ -129,38 +129,62 @@
                             </div>
                             <!--End all block post-->
 
-                            {% if paginator == true %}
+                            {% if paginator.show == true %}
                                 <!--Paginator-->
                                 <div class="block pagination tCenter margTSmall margBSmall">
                                     <ul>
-                                        {% if currentPage > 1 %}
-                                            <li class="prev">
-                                                <a href="{{ path('list_all_posts', { 'page': currentPage - 1 })}}">
-                                                    <i class="icon-left-open-mini"></i>
-                                                </a>
-                                            </li>
+                                        {% if paginator.query is defined %}
+                                            {% if paginator.currentPage > 1 %}
+                                                <li class="prev">
+                                                    <a href="{{ path(paginator.route, { 'query': paginator.query, 'page': paginator.currentPage -1 }) }}">
+                                                        <i class="icon-left-open-mini"></i>
+                                                    </a>
+                                                </li>
+                                            {% endif %}
+                                            {% for i in 1..paginator.pageCount %}
+                                                <li>
+                                                    <a href="{{ path(paginator.route, { 'query': paginator.query, 'page': i } ) }}" {% if i == paginator.currentPage %} class="selected"{% endif %}>
+                                                        {{ i }}
+                                                    </a>
+                                                </li>
+                                            {% endfor %}
+                                            {% if paginator.currentPage < paginator.pageCount %}
+                                                <li class="next">
+                                                    <a href="{{ path(paginator.route, { 'query': paginator.query, 'page': paginator.currentPage + 1 })}}">
+                                                        <i class="icon-right-open-mini"></i>
+                                                    </a>
+                                                </li>
+                                            {%  endif %}
+                                        {% else %}
+                                            {% if paginator.currentPage > 1 %}
+                                                <li class="prev">
+                                                    <a href="{{ path(paginator.route, { 'page': paginator.currentPage -1 }) }}">
+                                                        <i class="icon-left-open-mini"></i>
+                                                    </a>
+                                                </li>
+                                            {% endif %}
+                                            {% for i in 1..paginator.pageCount %}
+                                                <li>
+                                                    <a href="{{ path(paginator.route, { 'page': i } ) }}" {% if i == paginator.currentPage %} class="selected"{% endif %}>
+                                                        {{ i }}
+                                                    </a>
+                                                </li>
+                                            {% endfor %}
+                                            {% if paginator.currentPage < paginator.pageCount %}
+                                                <li class="next">
+                                                    <a href="{{ path(paginator.route, { 'page': paginator.currentPage + 1 })}}">
+                                                        <i class="icon-right-open-mini"></i>
+                                                    </a>
+                                                </li>
+                                            {%  endif %}
                                         {% endif %}
-                                        {% for i in 1..pageCount %}
-                                            <li>
-                                                <a href="{{ path('list_all_posts', { 'page': i } ) }}" {% if i == currentPage %} class="selected"{% endif %}>
-                                                    {{ i }}
-                                                </a>
-                                            </li>
-                                        {% endfor %}
-                                        {% if currentPage < pageCount %}
-                                            <li class="next">
-                                                <a href="{{ path('list_all_posts', { 'page': currentPage + 1 })}}">
-                                                    <i class="icon-right-open-mini"></i>
-                                                </a>
-                                            </li>
-                                        {%  endif %}
                                     </ul>
                                 </div> 
                                 <!--End paginator-->
                             {% else %}
                                 <!--Button View All-->
                                 <div class="block-all tCenter margTSmall margBSmall">
-                                    <a class="but  brd" href="{{ path('list_all_posts', { page: 1 }) }}">Ver todos los blogs</a>
+                                    <a class="but  brd" href="{{ path(paginator.route, { 'page': 1 }) }}">Ver todos los blogs</a>
                                 </div>
                                 <!--End Butto View All-->
                             {% endif %}

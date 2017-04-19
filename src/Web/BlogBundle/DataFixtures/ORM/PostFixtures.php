@@ -20,7 +20,7 @@ class LoadPostData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
-        for ($i=1; $i <= 5; $i++) { 
+        for ($i=1; $i <= 30; $i++) { 
             $post = new Post();
 
             // Se establece los valores (para las fechas se toma los valores por defecto, ver contructor de la entidad)
@@ -30,8 +30,11 @@ class LoadPostData extends AbstractFixture implements OrderedFixtureInterface
             $post->setAuthor($this->getReference('user'.mt_rand(1,5)));
             
             // Generamos una fecha de actualización aleatoria
-            $date = mt_rand(1,28).'-'.mt_rand(1,12).'-'.mt_rand(2010,2017);
+            $date = mt_rand(1,28).'-'.mt_rand(1,12).'-'.mt_rand(2010,2016);
             $post->setUpdated(new \DateTime($date));
+            // Nota: Para la siguiente linea, el ciclo de vida (HasLifecycleCallbacks) establecerá la fecha de creación
+            //       al momento en el que se cree los datos, si no se comenta dicha linea en la entidad Post.php 
+            $post->setCreated(new \DateTime($date));
 
             // A cada post se le asignará 5 tags aleatorios, como el nombre de los tags corresponde
             //    con el patrón tag[1-10], para ello obtenemos 5 núrmeros aleatorios, distintos,
@@ -60,6 +63,8 @@ class LoadPostData extends AbstractFixture implements OrderedFixtureInterface
         }
 
         $manager->flush();
+
+        echo "\nNota: Para la fecha de creación de los posts, el ciclo de vida (HasLifecycleCallbacks) la establecerá a la fecha actual, para evitar esto se tiene que comentar la linea \"\$this->created = new \\DateTime('now');\" en la entidad Post.php.\n\n";
     }
     
     /**

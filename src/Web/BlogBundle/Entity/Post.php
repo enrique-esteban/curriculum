@@ -344,6 +344,8 @@ class Post
     {
         if (null === $this->getImage()) $this->image = '/images/blog/default_right.jpg';
 
-        $this->created = new \DateTime('now');
+        // Nota: Para establecer una fecha aleatoria en el momento de cargar los fixture se tiene que
+        //       comentar la linea de abajo antes de cargar los datos.
+        //$this->created = new \DateTime('now');
     }
 }

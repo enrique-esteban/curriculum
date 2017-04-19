@@ -963,6 +963,7 @@ span.meta-date{
 
 .block-post p{
 	margin-bottom:25px;
+  text-align: justify;
 }
 
 
@@ -1057,6 +1058,7 @@ span.meta-date{
 .comment-content {
     margin-bottom: 15px;
     margin-left: 120px;
+    text-align: justify;
 }
 
 
@@ -1151,6 +1153,14 @@ span.meta-date{
     font-size: 11px;
 	color: #45a2b3;
 	position: relative;
+    top: -5px;
+}
+
+.comment-content .date span {
+    display: inline-block;
+    font-size: 11px;
+  color: #45a2b3;
+  position: relative;
     top: -5px;
 }
 

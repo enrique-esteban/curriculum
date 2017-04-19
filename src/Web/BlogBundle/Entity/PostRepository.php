@@ -46,7 +46,7 @@ class PostRepository extends EntityRepository
      * @param integer $offset número de la fila desde la que empezar a contar  
      * @return array
      */
-    public function findByTag($tagSlug, $limit = 5, $offset = 0)
+    public function findAllByTag($tagSlug, $limit = 5, $offset = 0)
     {
         $em = $this->getEntityManager();
 
@@ -68,22 +68,26 @@ class PostRepository extends EntityRepository
     }
 
     /**
-     * Busca todos los Blog que se relacionen con algún Tag y devuelve ambos
+     * Busca un post relacionado con un Slug concreto, obteniendo además sus tag and comentarios medienta
+     *    un fetch join.
      * 
-     * @return array
+     * @param string $slug slug de la etiqueta por la cual se buscaran los posts
+     * @return Web\BlogBundle\Entity\Post
      */
-    public function findAllRelatingToTags()
+    public function findOneBySlug($slug)
     {
         $em = $this->getEntityManager();
 
         $query = $em->createQuery(
-            'SELECT b, t
-             FROM BlogBundle:Blog b
-             JOIN b.tags t'
-        );
+            'SELECT p, c, t
+             FROM BlogBundle:Post p
+             JOIN p.comments c
+             JOIN p.tags t
+             WHERE p.slug = :slug'
+        )->setParameters(array(
+                'slug' => $slug
+        ));
 
-        return $query->getResult();
+        return $query->getOneOrNullResult();
     }
-
-    
 }
